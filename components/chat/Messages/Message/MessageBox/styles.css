@@ -112,3 +112,21 @@ a
 .message__user-link {
     margin-bottom: 5px;
 }
+.show-picker-button
+{
+    display: inline;
+    float: right;
+    top: 0;
+    cursor: pointer;
+}
+
+.reactions
+{
+    width: 100%;
+}
+
+.messages-container .emoji-mart-search,
+.messages-container .emoji-mart-category-label
+{
+    display: none;
+}

@@ -1,0 +1,28 @@
+.reactions
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.container
+{
+    cursor: pointer;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    display: flex;
+    align-content: space-around;
+    width: 32px;
+    margin-right: 3px;
+}
+
+.amount
+{
+    font-size: 16px;
+    margin-left: 3px;
+}
+
+.pressed
+{
+    border-color: #ff7f50;
+    background-color: rgb(255, 127, 81, .2);
+}
