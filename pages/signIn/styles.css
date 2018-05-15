@@ -1,22 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web);
+
+h1
+{
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 10vh;
+    margin-bottom: 20vh;
+    color: #fff;
+}
+
+.pony
+{
+    float: left;
+    width: 40vh;
+}
+
 .signin__container
 {
     width: 100vw;
     height: 100vh;
-    background: #fff;
+    background: linear-gradient(to top left, #3da6c2, #f5002a);
     text-align: center;
-}
-
-.logo
-{
-    width: 210px;
-    height: 210px;
-    transform: translateY(40px) translateX(2px);
 }
 
 .sign-in
 {
     position: absolute;
-    top: 50%;
+    top: 65%;
     left: 50%;
     transform: translate(-50%, -100%);
 }
@@ -34,15 +43,14 @@
     line-height: 40px;
     padding: 20px 40px;
     display: block;
-    border: 2px solid #ff7f50;
+    border: 0px solid #b0e0e6;
     text-align: center;
-    border-radius: 3px;
-    background-color: #fff;
-    color: #000;
+    background: linear-gradient(to top left, #b3e3e9, #ffc3cf);
+    color: #434343;
 }
 
 .sign-in__a:hover
 {
-    background-color: #f55649;
+    background: linear-gradient(to top left, #76c9d4, #ff748c);
     color: #fff;
 }
