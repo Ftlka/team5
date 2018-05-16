@@ -26,7 +26,7 @@
     position: absolute;
     border-radius: 5px;
     bottom: 0;
-    background: linear-gradient(to bottom, #e0e246, #ff7f50);
+    background: linear-gradient(35deg, #3da6c2, #f5002a);
 }
 
 .loader .line1
