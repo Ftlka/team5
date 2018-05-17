@@ -103,9 +103,9 @@ export default class IndexPage extends Component {
                     onConversationClick={this._onConversationClick.bind(this)}
                     currentUser={currentUser}
                 />
-                {messagesInfo.messages
+                { messagesInfo.messages
                     ? <Chat messagesInfo={messagesInfo}/>
-                    : <WelcomeMessage />
+                    : <WelcomeMessage conversations={conversations} />
                 }
                 <Menu contacts={contactsList}
                     menu={menu} />

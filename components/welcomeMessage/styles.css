@@ -11,3 +11,8 @@
 {
     padding-top: 15px;
 }
+
+.message__icon
+{
+    cursor: default;
+}
