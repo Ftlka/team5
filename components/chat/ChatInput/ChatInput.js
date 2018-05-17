@@ -38,6 +38,7 @@ export default class ChatInput extends React.Component {
         this.onDragLeave = this.onDragLeave.bind(this);
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDrop = this.onDrop.bind(this);
+        this.handleOutsideEmojiClick = this.handleOutsideEmojiClick.bind(this);
     }
 
     handleCloseModal() {
@@ -47,6 +48,7 @@ export default class ChatInput extends React.Component {
     componentDidMount() {
         // eslint-disable-next-line
         document.addEventListener('keydown', this.handleEscape, false);
+        document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -191,6 +193,15 @@ export default class ChatInput extends React.Component {
         }
     }
 
+    handleOutsideEmojiClick(event) {
+        if (!this.pickerContainer.contains(event.target) &&
+            !this.pickerButton.contains(event.target)) {
+            this.setState({
+                showPicker: false
+            });
+        }
+    }
+
     render() {
         const loading = this.state.loading;
         const { dropzoneActive } = this.state;
@@ -226,10 +237,14 @@ export default class ChatInput extends React.Component {
                     {loading ? <LoadingSpinner /> : null}
 
                     {this.state.showPicker
-                        ? <EmojiPicker
-                            recentEmoji={this.state.shownRecentEmoji}
-                            onEmojiSelect={this.onEmojiSelect}
-                        />
+                        ? <div className='picker-container' ref={pickerContainer => {
+                            this.pickerContainer = pickerContainer;
+                        }}>
+                            <EmojiPicker
+                                recentEmoji={this.state.shownRecentEmoji}
+                                onEmojiSelect={this.onEmojiSelect}
+                            />
+                        </div>
                         : null
                     }
 
@@ -249,6 +264,9 @@ export default class ChatInput extends React.Component {
                         />
                         <div className='chat-input__show-picker-button'
                             onClick={this.onShowPickerButtonClick}
+                            ref={pickerButton => {
+                                this.pickerButton = pickerButton;
+                            }}
                         >
                             <img className='chat-input__emoji-icon' src={this.state.emojiIcon} />
                         </div>

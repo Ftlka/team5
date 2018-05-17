@@ -4,6 +4,7 @@
     margin-left: 15px;
     margin-top: -5px;
     width: 194px;
+    position: relative;
 }
 
 .add-contact-form__input
@@ -19,4 +20,10 @@
 .add-contact-form__input
 {
     height: 30px;
+}
+
+.error-message-contacts
+{
+    font-size: 11px;
+    width: 105%;
 }
