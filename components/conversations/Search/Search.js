@@ -14,6 +14,7 @@ export default class Search extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     static getDerivedStateFromProps(nextProps) {
@@ -30,9 +31,13 @@ export default class Search extends React.Component {
         this.setState({ inputValue: event.target.value });
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
     render() {
         return (
-            <form className='search'>
+            <form className='search' onSubmit={this.handleSubmit}>
                 <input
                     type='text'
                     className='search__input'

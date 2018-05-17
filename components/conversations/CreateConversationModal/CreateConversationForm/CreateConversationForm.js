@@ -14,42 +14,63 @@ export default class CreateConversationForm extends React.Component {
             handleCloseModal: props.handleCloseModal,
             inputValue: '',
             disabled: false,
-            placeholder: 'Название беседы'
+            placeholder: 'Название беседы',
+            displayErrorPopup: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleOutsideClick = this.handleOutsideClick.bind(this);
     }
 
     componentDidMount() {
         this.socket = io();
+        document.addEventListener('click', this.handleOutsideClick); // eslint-disable-line
     }
 
     handleChange(event) {
-        this.setState({ inputValue: event.target.value });
+        this.setState({
+            inputValue: event.target.value,
+            displayErrorPopup: false
+        });
     }
 
     async handleSubmit(event) {
         event.preventDefault();
 
         const conversationName = this.state.inputValue;
-        this.setState({
-            disabled: true,
-            inputValue: '',
-            placeholder: 'Запрос обрабатывается'
-        });
+        if (conversationName.match(/^(?=.*[a-zа-яё\d]$)[a-zа-яё\d][a-zа-яё\d-]{0,}$/i)) {
+            this.setState({
+                disabled: true,
+                displayErrorPopup: false,
+                inputValue: '',
+                placeholder: 'Запрос обрабатывается'
+            });
+            const res = await createNotPrivateConversation(conversationName,
+                [this.props.currentUser]);
 
-        const res = await createNotPrivateConversation(conversationName, [this.props.currentUser]);
+            this.socket.emit('newConversation', res.data);
 
-        this.socket.emit('newConversation', res.data);
+            this.state.handleCloseModal();
+        } else {
+            this.setState({
+                displayErrorPopup: true
+            });
+        }
+    }
 
-        this.state.handleCloseModal();
+    handleOutsideClick(event) {
+        if (!this.errorPopup.contains(event.target)) {
+            this.setState({
+                displayErrorPopup: false
+            });
+        }
     }
 
     render() {
         return (
             <div className='create-conversation'>
-                {this.state.disabled ? <LoadingSpinner /> : null}
+                {this.state.disabled && <LoadingSpinner />}
                 <form onSubmit={this.handleSubmit}>
                     <header className='create-conversation__header'>Создать беседу</header>
                     <input
@@ -62,6 +83,16 @@ export default class CreateConversationForm extends React.Component {
                         autoFocus
                     />
                 </form>
+                {this.state.displayErrorPopup &&
+                    <div className='error-message error-message-dialogs'
+                        ref={errorPopup => {
+                            this.errorPopup = errorPopup;
+                        }}>
+                        <div className='error-message__text'>
+                            Имя должно содержать только буквы,
+                        цифры и тире. Не может начинаться и заканчиваться тире.
+                        </div>
+                    </div>}
             </div>
         );
     }
