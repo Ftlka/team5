@@ -45,13 +45,13 @@ export default class Reactions extends React.Component {
     }
 
     render() {
-        return (<div className="reactions">
+        return (<div className='reactions'>
             {this.state.reactions.map((reaction, idx) =>
                 (
                     <div key={idx} className={`container ${reaction.self}`}
                         onClick={() => this.onReactionClick(reaction.emoji)}>
-                        <Emoji className="emoji" key={idx} emoji={reaction.emoji} size={16} />
-                        <div className="amount">{reaction.amount}</div>
+                        <Emoji className='emoji' key={idx} emoji={reaction.emoji} size={16} />
+                        <div className='amount'>{reaction.amount}</div>
                     </div>
                 )
             )}

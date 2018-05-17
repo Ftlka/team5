@@ -147,3 +147,20 @@ a
 {
     display: none;
 }
+
+.messages-container
+{
+    position: relative;
+}
+
+.self-picker-window
+{
+    border: 2px solid coral !important;
+    right: 0 !important;
+}
+
+.other-picker-window
+{
+    border: 2px solid red !important;
+    left: 0 !important;
+}

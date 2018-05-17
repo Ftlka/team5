@@ -97,7 +97,25 @@ export default class Message extends React.Component {
     }
 
     render() {
-        return <div className="messages-container">
+        return <div className='messages-container'>
+            {this.state.showPicker &&
+                <Picker
+                    className={`${this.state.position}-picker-window`}
+                    onClick={this.onEmojiSelect}
+                    showPreview={false}
+                    color='lightsalmon'
+                    set='emojione'
+                    perLine='6'
+                    style={{
+                        zIndex: '10',
+                        position: 'absolute',
+                        height: '150px',
+                        overflow: 'hidden'
+                    }}
+                    l18n={{ search: null }}
+                    exclude={['recent']}
+                />
+            }
             <li
                 className={this.state.position}>
                 <div
@@ -142,30 +160,10 @@ export default class Message extends React.Component {
                     source={this.state.text} />
                     <time>{this.state.curTime}</time>
                     <br />
-                    <Reactions className="reactions" reactions={this.state.reactions} />
+                    <Reactions className='reactions' reactions={this.state.reactions} />
                 </div>
-                {this.state.showPicker
-                    ? <Picker
-                        onClick={this.onEmojiSelect}
-                        showPreview={false}
-                        color='lightsalmon'
-                        set='emojione'
-                        perLine='6'
-                        style={{
-                            zIndex: '100',
-                            right: '7%',
-                            position: 'absolute',
-                            margin: '8%',
-                            top: '18px',
-                            height: '150px',
-                            overflow: 'hidden'
-                        }}
-                        l18n={{ search: null }}
-                        exclude={['recent']}
-                    />
-                    : null
-                }
             </li>
+
             {this.props.renderAddCmp()}
 
         </div>;
