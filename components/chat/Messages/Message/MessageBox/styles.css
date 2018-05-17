@@ -114,10 +114,27 @@ a
 }
 .show-picker-button
 {
-    display: inline;
-    float: right;
-    top: 0;
+    width: 23px;
+    height: 27px;
     cursor: pointer;
+}
+
+.empty-div
+{
+    width: 23px;
+    height: 27px;
+}
+
+.other-picker
+{
+    margin: -2px -3px 0 4px;
+    float: right;
+}
+
+.self-picker
+{
+    margin-top: -25px;
+    float: left;
 }
 
 .reactions

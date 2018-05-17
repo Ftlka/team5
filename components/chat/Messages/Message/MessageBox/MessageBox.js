@@ -126,11 +126,10 @@ export default class Message extends React.Component {
                         : null
                     }
                     {this.state.showPickerButton
-                        ? <div className="show-picker-button"
+                        ? <div className={`show-picker-button ${this.state.position}-picker`}
                             onClick={this.onShowPickerButtonClick}
-                        >&#9786;
-                        </div>
-                        : null}
+                        >&#9786; </div>
+                        : <div className={`empty-div ${this.state.position}-picker`}></div>}
                     <ReactMarkdown renderers={{
                         linkReference: (reference) => {
                             if (!reference.href) {
