@@ -4,6 +4,7 @@ import 'react-chat-elements/dist/main.css';
 import Conversations from '../../components/conversations';
 import Chat from '../../components/chat';
 import Menu from '../../components/menu';
+import WelcomeMessage from '../../components/welcomeMessage';
 import io from 'socket.io-client';
 import { getConversations } from '../../lib/apiRequests/conversations';
 import { getContacts } from '../../lib/apiRequests/contacts';
@@ -102,9 +103,9 @@ export default class IndexPage extends Component {
                     onConversationClick={this._onConversationClick.bind(this)}
                     currentUser={currentUser}
                 />
-                {messagesInfo.messages
+                { messagesInfo.messages
                     ? <Chat messagesInfo={messagesInfo}/>
-                    : null
+                    : <WelcomeMessage conversations={conversations} />
                 }
                 <Menu contacts={contactsList}
                     menu={menu} />
