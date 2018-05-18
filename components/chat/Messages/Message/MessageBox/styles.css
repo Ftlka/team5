@@ -91,15 +91,6 @@ a
     -ms-user-select: none;
 }
 
-.msg time:before
-{
-    content: '\f017';
-    color: #ddd;
-    font-family: FontAwesome, serif;
-    display: inline-block;
-    margin-right: 4px;
-}
-
 .msg img
 {
     width: 13em;
