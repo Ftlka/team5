@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import { updateRecentEmoji } from '../../../lib/apiRequests/emoji';
 import { saveMessage } from '../../../lib/apiRequests/messages';
@@ -305,26 +306,26 @@ export default class ChatInput extends React.Component {
                             }}
                         />
 
-                        <div className="chat-input__buttons">
+                        <div className='chat-input__buttons'>
                             <div className='chat-input__show-picker-button'
                                 onClick={this.onShowPickerButtonClick}
                                 ref={pickerButton => {
                                     this.pickerButton = pickerButton;
                                 }}
                             >
-                                <div className="chat-input__sprite chat-input__sprite-emoji" />
+                                <div className='chat-input__sprite chat-input__sprite-emoji' />
                             </div>
 
                             {Recognizer.isAvailable() &&
-                                <div className="chat-input__recognition-button">
+                                <div className='chat-input__recognition-button'>
                                     {!this.state.isRecognitionStarted
                                         ? <div
-                                            className="chat-input__sprite chat-input__sprite-mic"
+                                            className='chat-input__sprite chat-input__sprite-mic'
                                             onClick={this.startRecognition}
                                         />
                                         : <div
-                                            className="chat-input__sprite
-                                                chat-input__sprite-crossed-mic"
+                                            className={`chat-input__sprite
+                                                chat-input__sprite-crossed-mic`}
                                             onClick={this.stopRecognition}
                                         />
                                     }
@@ -332,9 +333,12 @@ export default class ChatInput extends React.Component {
                             }
 
                             <label className='chat-input__file-label' htmlFor='file-input'>
-                                <div className="chat-input__sprite chat-input__sprite-file" />
+                                <div className='chat-input__sprite chat-input__sprite-file' />
                             </label>
                         </div>
+
+                        {this.state.isRecognitionStarted &&
+                            <div className='chat-input__red-dot' />}
 
                         <input
                             type='file'
