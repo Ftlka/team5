@@ -131,8 +131,7 @@ export default class ChatInput extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         await this.stopRecognition();
-        const messageText = this.state.messageText.replace(/\n/g, '\n\n');
-
+        const messageText = this.state.messageText.replace(/\n/g, '\n\n').trim();
 
         const message = {
             type: 'text',
@@ -301,6 +300,7 @@ export default class ChatInput extends React.Component {
                             onKeyPress={this.onInputPressKey}
                             margin='normal'
                             autoFocus
+                            required
                             inputRef={chatInput => {
                                 this.chatInput = chatInput;
                             }}
