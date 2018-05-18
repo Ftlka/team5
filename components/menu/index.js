@@ -1,6 +1,5 @@
 import React from 'react';
 
-import TimeWatch from './TimeWatch/TimeWatch.js';
 import AddToContactsForm from './AddToContactForm/AddToContactsForm.js';
 import ProfileModal from '../ProfileModal/ProfileModal.js';
 import Contacts from './Contacts/Contacts.js';
@@ -77,9 +76,8 @@ export default class Menu extends React.Component {
                     />
                 </div>
 
-                <div className='menu__name-and-time'>
+                <div className='menu__username'>
                     {this.state.name}
-                    <TimeWatch/>
                 </div>
 
                 <Contacts

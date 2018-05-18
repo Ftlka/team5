@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 
 import Profile from './Profile/Profile.js';
 
-export default class Modal extends React.Component {
+export default class ProfileModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = { self: props.username };

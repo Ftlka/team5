@@ -23,7 +23,8 @@ export default class Chat extends React.Component {
             currentConversation: props.messagesInfo.currentConversation,
             participantsVisible: false,
             ignore: true,
-            disableActiveWindow: true
+            disableActiveWindow: true,
+            title: ''
         };
 
         getRecentEmoji()

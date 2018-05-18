@@ -1,13 +1,16 @@
+/* eslint-disable complexity */
 import React from 'react';
 import { updateRecentEmoji } from '../../../lib/apiRequests/emoji';
 import { saveMessage } from '../../../lib/apiRequests/messages';
 import EmojiPicker from './EmojiPicker/EmojiPicker';
-import { uploadImage } from '../../../lib/apiRequests/images';
+import { uploadImage as requestUploadImage } from '../../../lib/apiRequests/images';
 import LoadingSpinner from '../../LoadingSpinner';
 import ErrorModal from '../../errorModal';
 import Dropzone from 'react-dropzone';
 import TextField from 'material-ui/TextField';
 
+import ChatInputButtons from './ChatInputButtons/ChatInputButtons';
+import Recognizer from '../../../lib/Recognizer/Recognizer';
 import './styles.css';
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -19,14 +22,17 @@ export default class ChatInput extends React.Component {
             files: [],
             showPicker: false,
             loading: false,
-            showModal: false,
+            showErrorModal: false,
             dropzoneActive: false,
-            sendIcon: 'static/images/Emoji_Foggy_PNG.png',
-            emojiIcon: 'static/images/Slightly_Smiling_Face_Emoji.png'
+            isRecognitionStarted: false,
+            recognizedText: ''
         };
 
         this.numberOfRecentEmoji = props.numberOfRecentEmoji || 15;
+        this._bindHandlers();
+    }
 
+    _bindHandlers() {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onEmojiSelect = this.onEmojiSelect.bind(this);
@@ -34,21 +40,14 @@ export default class ChatInput extends React.Component {
         this.onInputPressKey = this.onInputPressKey.bind(this);
         this.handleEscape = this.handleEscape.bind(this);
         this.onFileInputChange = this.onFileInputChange.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleCloseErrorModal = this.handleCloseErrorModal.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
         this.onDragEnter = this.onDragEnter.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.handleOutsideEmojiClick = this.handleOutsideEmojiClick.bind(this);
-    }
-
-    handleCloseModal() {
-        this.setState({ showModal: false });
-    }
-
-    componentDidMount() {
-        // eslint-disable-next-line
-        document.addEventListener('keydown', this.handleEscape, false);
-        document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+        this.handleRecognitionResult = this.handleRecognitionResult.bind(this);
+        this.startRecognition = this.startRecognition.bind(this);
+        this.stopRecognition = this.stopRecognition.bind(this);
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -60,9 +59,19 @@ export default class ChatInput extends React.Component {
         }
     }
 
+    componentDidMount() {
+        // eslint-disable-next-line
+        document.addEventListener('keydown', this.handleEscape, false);
+        document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+    }
+
     componentWillUnmount() {
         // eslint-disable-next-line
         document.removeEventListener('keydown', this.handleEscape, false);
+    }
+
+    handleCloseErrorModal() {
+        this.setState({ showErrorModal: false });
     }
 
     handleEscape(event) {
@@ -72,12 +81,58 @@ export default class ChatInput extends React.Component {
     }
 
     handleChange(event) {
+        if (this.state.isRecognitionStarted) {
+            return;
+        }
         this.setState({ messageText: event.target.value });
+    }
+
+    handleRecognitionResult({ text, isFinal }) {
+        if (!this.state.isRecognitionStarted) {
+            return;
+        }
+
+        if (!isFinal) {
+            this.setState({ recognizedText: text });
+
+            return;
+        }
+
+        this.setState({
+            messageText: `${this.state.messageText} ${text}`,
+            recognizedText: ''
+        });
+    }
+
+    startRecognition() {
+        if (!this.recognizer) {
+            this.recognizer = new Recognizer();
+            this.recognizer.onResult = this.handleRecognitionResult;
+        }
+
+        this.recognizer.startRecognition();
+        this.setState({ isRecognitionStarted: true });
+        this.chatInput.focus();
+    }
+
+    async stopRecognition() {
+        if (this.recognizer) {
+            this.recognizer.stopRecognition();
+        }
+
+        await this.setState({
+            isRecognitionStarted: false,
+            messageText: `${this.state.messageText} ${this.state.recognizedText}`,
+            recognizedText: ''
+        });
+
+        this.chatInput.focus();
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        const messageText = this.state.messageText.replace(/\n/g, '\n\n');
+        await this.stopRecognition();
+        const messageText = this.state.messageText.replace(/\n/g, '\n\n').trim();
 
         const message = {
             type: 'text',
@@ -100,28 +155,10 @@ export default class ChatInput extends React.Component {
     onFileInputChange(event, file = event.target.files[0]) {
         event.preventDefault();
         this.setState({ loading: true });
-        uploadImage(file)
-            .then(res => {
-                if (res.data.error) {
-                    this.setState({
-                        loading: false,
-                        showModal: true,
-                        error: res.data.error.message
-                    });
-                } else {
-                    this.setState({ loading: false });
-                    const message = {
-                        type: 'image',
-                        conversationId: this.props.conversationId,
-                        imageUrl: `/api/images/${res.data.imageId}`,
-                        author: this.props.currentUser
-                    };
-                    this.props.socket.emit('message', message);
-                    saveMessage(message, message.conversationId);
-                }
-            });
+        this.uploadImage(file);
         event.target.value = '';
     }
+
     onDragEnter() {
         this.setState({
             dropzoneActive: true
@@ -140,12 +177,16 @@ export default class ChatInput extends React.Component {
             dropzoneActive: false,
             loading: true
         });
-        uploadImage(files[0])
+        this.uploadImage(files[0]);
+    }
+
+    uploadImage(file) {
+        requestUploadImage(file)
             .then(res => {
                 if (res.data.error) {
                     this.setState({
                         loading: false,
-                        showModal: true,
+                        showErrorModal: true,
                         error: res.data.error.message
                     });
                 } else {
@@ -194,7 +235,7 @@ export default class ChatInput extends React.Component {
     }
 
     handleOutsideEmojiClick(event) {
-        if (!this.pickerContainer.contains(event.target) &&
+        if (this.pickerContainer && !this.pickerContainer.contains(event.target) &&
             !this.pickerButton.contains(event.target)) {
             this.setState({
                 showPicker: false
@@ -229,9 +270,9 @@ export default class ChatInput extends React.Component {
                 {dropzoneActive && <div style={overlayStyle}>Drop images...</div>}
                 <div className='chat-input'>
                     <ErrorModal
-                        showModal={this.state.showModal}
+                        showModal={this.state.showErrorModal}
                         error={this.state.error}
-                        handleCloseModal={this.handleCloseModal}
+                        handleCloseModal={this.handleCloseErrorModal}
                     />
 
                     {loading ? <LoadingSpinner /> : null}
@@ -252,34 +293,35 @@ export default class ChatInput extends React.Component {
                         <TextField
                             id='multiline-flexible'
                             label='Введите новое сообщение'
-                            // className='chat-input__textarea'
                             multiline
-                            rowsMax='1'
-                            value={this.state.messageText}
+                            rowsMax='3'
+                            value={this.state.messageText + this.state.recognizedText}
                             placeholder='Привет'
                             onChange={this.handleChange}
                             onKeyPress={this.onInputPressKey}
                             margin='normal'
                             autoFocus
+                            required
+                            inputRef={chatInput => {
+                                this.chatInput = chatInput;
+                            }}
+
                         />
-                        <div className='chat-input__show-picker-button'
-                            onClick={this.onShowPickerButtonClick}
-                            ref={pickerButton => {
+
+                        <ChatInputButtons
+                            isRecognizerAvailable={Recognizer.isAvailable()}
+                            onShowPickerButtonClick={this.onShowPickerButtonClick}
+                            pickerButtonRef={pickerButton => {
                                 this.pickerButton = pickerButton;
                             }}
-                        >
-                            <img className='chat-input__emoji-icon' src={this.state.emojiIcon} />
-                        </div>
-                        <label className='chat-input__file-label' htmlFor='file-input'>
-                            <img className='chat-input__file-icon' src={this.state.sendIcon} />
-                        </label>
-
-                        <input
-                            type='file'
-                            onChange={this.onFileInputChange}
-                            className='file-input'
-                            id='file-input'
+                            isRecognitionStarted={this.state.isRecognitionStarted}
+                            startRecognition={this.startRecognition}
+                            stopRecognition={this.stopRecognition}
+                            onFileInputChange={this.onFileInputChange}
                         />
+
+                        {this.state.isRecognitionStarted &&
+                            <div className='chat-input__red-dot' />}
                     </div>
                 </div>
             </Dropzone>

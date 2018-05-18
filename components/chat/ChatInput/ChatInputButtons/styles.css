@@ -1,0 +1,31 @@
+.chat-input-buttons
+{
+    display: flex;
+    flex-direction: row;
+    margin-right: 3px;
+}
+
+.chat-input-buttons__show-picker-button
+{
+    cursor: pointer;
+}
+
+.chat-input-buttons__image
+{
+    margin: 0 2.5px;
+}
+
+.chat-input-buttons__recognition-button
+{
+    cursor: pointer;
+}
+
+.chat-input-buttons__file-label
+{
+    cursor: pointer;
+}
+
+.chat-input-buttons__file-input
+{
+    display: none;
+}
