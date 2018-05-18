@@ -28,29 +28,45 @@ export default class ChatInputButtons extends Component {
                         onClick={this.state.onShowPickerButtonClick}
                         ref={this.state.pickerButtonRef}
                     >
-                        <div className={`chat-input-buttons__sprite
-                            chat-input-button__sprite-emoji`} />
+                        <img
+                            className='chat-input-buttons__image'
+                            src='static/images/smile.svg'
+                            alt='Смайлики'
+                            width='30'
+                            height='30'
+                        />
                     </div>
 
                     {this.state.isRecognizerAvailable &&
                         <div className='chat-input-buttons__recognition-button'>
                             {!this.state.isRecognitionStarted
-                                ? <div
-                                    className={`chat-input-buttons__sprite
-                                        chat-input-buttons__sprite-mic`}
+                                ? <img
+                                    className='chat-input-buttons__image'
+                                    src='static/images/mic.svg'
+                                    alt='Начать аудионабор'
                                     onClick={this.state.startRecognition}
+                                    width='30'
+                                    height='30'
                                 />
-                                : <div
-                                    className={`chat-input-buttons__sprite
-                                        chat-input-buttons__sprite-crossed-mic`}
+                                : <img
+                                    className='chat-input-buttons__image'
+                                    src='static/images/crossed-mic.svg'
+                                    alt='Остановить аудионабор'
                                     onClick={this.state.stopRecognition}
+                                    width='30'
+                                    height='30'
                                 />
                             }
                         </div>}
 
                     <label className='chat-input-buttons__file-label' htmlFor='file-input'>
-                        <div className={`chat-input-buttons__sprite
-                            chat-input-buttons__sprite-file`} />
+                        <img
+                            className='chat-input-buttons__image'
+                            src='static/images/picture.svg'
+                            alt='Отправить изображение'
+                            width='30'
+                            height='30'
+                        />
                     </label>
                 </div>
 
