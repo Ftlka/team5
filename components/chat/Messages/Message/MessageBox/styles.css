@@ -105,26 +105,29 @@ a
 }
 .show-picker-button
 {
-    width: 23px;
-    height: 27px;
+    line-height: 20px;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
+    font-size: 30px;
 }
 
 .empty-div
 {
-    width: 23px;
-    height: 27px;
+    width: 25px;
+    height: 25px;
 }
 
 .other-picker
 {
-    margin: -2px -3px 0 4px;
+    margin: -2px 3px 0 0;
     float: right;
 }
 
 .self-picker
 {
     margin-top: -25px;
+    margin-left: -5px;
     float: left;
 }
 

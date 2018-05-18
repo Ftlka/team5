@@ -118,8 +118,7 @@ export default class Message extends React.Component {
         this.checkForZeros();
         this.setState({
             reactions: this.state.reactions,
-            showPicker: !this.state.showPicker,
-            showPickerButton: false
+            showPicker: !this.state.showPicker
         });
     }
 
@@ -166,7 +165,8 @@ export default class Message extends React.Component {
                     )}</div>
                 <div className='msg'
                     onMouseEnter={() => this.setState({ showPickerButton: true })}
-                    onMouseLeave={() => this.setState({ showPickerButton: this.state.showPicker })}>
+                    onMouseLeave={() => this.setState({ showPickerButton: this.state.showPicker })}
+                    onMouseMove={() => this.setState({ showPickerButton: true })}>
                     <a
                         className='message__user-link'
                         onClick={this.props.onTitleClick}>{this.state.author}</a>
