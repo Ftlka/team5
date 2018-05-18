@@ -1,9 +1,12 @@
 import React from 'react';
 import { Picker } from 'emoji-mart';
 
+import './styles.css';
+
 export default class EmojiPicker extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {};
     }
 
     static getDerivedStateFromProps(nextProps) {

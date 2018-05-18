@@ -6,33 +6,18 @@
     z-index: 999;
 }
 
-.chat-input__textarea
+.chat-input__buttons
 {
-    box-sizing: border-box;
-    white-space: pre-wrap;
-    background: #fff;
-    outline: none;
-    color: #666;
-    font-weight: 400;
-    resize: none;
-    overflow: hidden;
-
-    border: solid 5px #ffa07a;
-    width: 100%;
-    height: 100%;
-
-    box-shadow: 0 1px 2px #9e9e9e;
-
-    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
 }
 
 .chat-input__show-picker-button
 {
-    position: absolute;
-    font-size: 45px;
     cursor: pointer;
-    right: 40px;
-    top: 0;
 }
 
 .chat-input__input-elements
@@ -49,17 +34,28 @@
 
 .chat-input__file-label
 {
-    position: absolute;
-    font-size: 24px;
     cursor: pointer;
-    top: 10px;
-    right: 15px;
 }
 
-.chat-input__emoji-icon,
-.chat-input__file-icon
+.chat-input__recognition-button
 {
+    cursor: pointer;
+}
+
+.chat-input__input-elements > :first-child
+{
+    width: 90% !important;
+}
+
+.chat-input__sprite
+{
+    background-image: url(/static/images/chat-sprites.png);
+    background-repeat: no-repeat;
+    display: block;
     width: 30px;
+    height: 30px;
+    margin: 0 3px;
+
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -67,12 +63,22 @@
     -ms-user-select: none;
 }
 
-.chat-input__emoji-icon
+.chat-input__sprite-emoji
 {
-    margin-right: 15px;
+    background-position: -45px -5px;
 }
 
-.chat-input__input-elements > :first-child
+.chat-input__sprite-file
 {
-    width: 90% !important;
+    background-position: -5px -5px;
+}
+
+.chat-input__sprite-mic
+{
+    background-position: -5px -45px;
+}
+
+.chat-input__sprite-crossed-mic
+{
+    background-position: -45px -45px;
 }

@@ -93,7 +93,7 @@ export default class AddToContactsForm extends React.Component {
     }
 
     handleOutsideClick(event) {
-        if (!this.errorPopup.contains(event.target)) {
+        if (this.errorPopup && !this.errorPopup.contains(event.target)) {
             this.setState({
                 displayErrorPopup: false
             });
