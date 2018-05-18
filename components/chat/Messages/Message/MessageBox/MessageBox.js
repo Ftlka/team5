@@ -5,6 +5,7 @@ import Lightbox from 'react-image-lightbox';
 import ImageMessage from './imageMessage/imageMessage';
 import { Picker } from 'emoji-mart';
 import Reactions from './Reactions/Reactions';
+import { updateReactions } from '../../../../../lib/apiRequests/reactions';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './styles.css';
@@ -13,6 +14,8 @@ export default class Message extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.id,
+            currentUser: props.currentUser,
             position: props.position,
             text: props.text,
             author: props.title,
@@ -27,10 +30,7 @@ export default class Message extends React.Component {
             curTime: props.date && !isNaN(props.date) && (
                 moment(props.date).fromNow()
             ),
-            reactions: [{ emoji: 'barber', amount: 2, self: 'pressed',
-                reacted: ['Ftlka', 'ftlkautophagia'] },
-            { emoji: 'crystal_ball', amount: 4, self: 'not-pressed',
-                reacted: ['akulin', 'snoward', 'darl0ck', 'Dan1elNeal'] }],
+            reactions: props.reactions,
             showPicker: false,
             showPickerButton: false
         };
@@ -84,22 +84,26 @@ export default class Message extends React.Component {
         });
     }
 
-    isUpdated(emoji) {
-        for (let reaction of this.state.reactions) {
-            if (reaction.emoji === emoji && reaction.self === 'not-pressed') {
+    patchReaction(emoji) {
+        const reaction = this.state.reactions.find(r => r.emoji === emoji);
+        if (reaction) {
+            if (reaction.self === 'not-pressed') {
                 reaction.amount++;
                 reaction.self = 'pressed';
-
-                return true;
-            } else if (reaction.emoji === emoji) {
+                reaction.reacted.push(this.state.currentUser);
+            } else {
                 reaction.amount--;
                 reaction.self = 'not-pressed';
-
-                return true;
+                console.info(reaction);
+                const index = reaction.reacted.indexOf(this.state.currentUser);
+                reaction.reacted.splice(index, 1);
             }
+        } else {
+            this.state.reactions.push({ emoji, amount: 1, self: 'pressed',
+                reacted: [this.state.currentUser] });
         }
 
-        return false;
+        console.info(this.state.reactions);
     }
 
     checkForZeros() {
@@ -113,15 +117,13 @@ export default class Message extends React.Component {
     }
 
     onEmojiSelect(emoji) {
-        // здесь запрос в axois
-        if (!this.isUpdated(emoji.id)) {
-            this.state.reactions.push({ emoji: emoji.id, amount: 1, self: 'pressed' });
-        }
+        this.patchReaction(emoji.id);
         this.checkForZeros();
         this.setState({
             reactions: this.state.reactions,
             showPicker: !this.state.showPicker
         });
+        updateReactions(emoji.id, this.state.id);
     }
 
     render() {
@@ -199,7 +201,11 @@ export default class Message extends React.Component {
                     source={this.state.text} />
                     <time>{this.state.curTime}</time>
                     <br />
-                    <Reactions className='reactions' reactions={this.state.reactions} />
+                    <Reactions
+                        className='reactions'
+                        reactions={this.state.reactions}
+                        onEmojiSelect={this.onEmojiSelect}
+                    />
                 </div>
             </li>
 

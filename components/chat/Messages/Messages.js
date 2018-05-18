@@ -40,7 +40,29 @@ export default class Messages extends React.Component {
         }
     }
 
+    groupReactionsByEmoji(reactions) {
+        const emojiDict = {};
+        for (let reaction of reactions) {
+            const { emoji, username } = reaction;
+            if (!(emoji in emojiDict)) {
+                emojiDict[emoji] = { amount: 0, reacted: [], self: 'not-pressed' };
+            }
+            if (this.state.currentUser === username) {
+                emojiDict[emoji].self = 'pressed';
+            }
+            emojiDict[emoji].amount++;
+            emojiDict[emoji].reacted.push(username);
+        }
+
+        return Object.keys(emojiDict).map(emoji => {
+            return { ...emojiDict[emoji], emoji };
+        });
+    }
+
     render() {
+        console.info(this.state.messages);
+        console.info(this.state.currentUser);
+
         return (
             <ol className='messages'>
                 {this.state.messages.map((message, idx) => {
@@ -54,9 +76,11 @@ export default class Messages extends React.Component {
                             imageUrl={message.imageUrl}
                             author={message.author}
                             date={message.date}
+                            reactions={this.groupReactionsByEmoji(message.reactions)}
                             metadata={message.metadata}
                             onMessageTitleClick={this.state.onMessageTitleClick}
                             saveElementForScroll={this.saveElementForScroll}
+                            id={message._id}
                         />
                     );
                 }

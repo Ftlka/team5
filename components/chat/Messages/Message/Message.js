@@ -7,11 +7,13 @@ export default class Message extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.id,
             currentUser: props.currentUser,
             text: props.text,
             type: props.type,
             imageUrl: props.imageUrl,
             author: props.author,
+            reactions: props.reactions,
             date: props.date,
             metadata: props.metadata,
             onMessageTitleClick: props.onMessageTitleClick,
@@ -24,6 +26,8 @@ export default class Message extends React.Component {
 
         return <div ref={this.state.saveElementForScroll}>
             <MessageBox
+                currentUser={this.state.currentUser}
+                id={this.state.id}
                 position={side}
                 avatar={`/api/avatar/${this.state.author}`}
                 title={this.state.author}
@@ -31,6 +35,7 @@ export default class Message extends React.Component {
                 type={this.state.type}
                 image={this.state.imageUrl}
                 text={this.state.text}
+                reactions={this.state.reactions}
                 date={new Date(this.state.date)}
                 renderAddCmp={() => {
                     return this.state.metadata

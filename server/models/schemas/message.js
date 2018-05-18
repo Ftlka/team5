@@ -9,7 +9,11 @@ const MessageSchema = new Schema({
     date: { type: Date, default: Date.now },
     text: { type: String },
     imageUrl: { type: String },
-    metadata: { type: MetadataSchema, ref: 'Metadata' }
+    metadata: { type: MetadataSchema, ref: 'Metadata' },
+    reactions: [{
+        username: String,
+        emoji: String
+    }]
 });
 
 mongoose.model('Message', MessageSchema);
