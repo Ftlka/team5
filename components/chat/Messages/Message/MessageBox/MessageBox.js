@@ -137,6 +137,7 @@ export default class Message extends React.Component {
                         color='lightsalmon'
                         set='emojione'
                         perLine='6'
+                        set='apple'
                         style={{
                             zIndex: '100',
                             opacity: '.99',
