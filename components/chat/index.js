@@ -17,6 +17,7 @@ import { saveMessage } from '../../lib/apiRequests/messages';
 import { uploadImage as requestUploadImage } from '../../lib/apiRequests/images';
 
 export default class Chat extends React.Component {
+// eslint-disable-next-line max-statements
     constructor(props) {
         super(props);
 

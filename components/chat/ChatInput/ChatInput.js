@@ -4,7 +4,6 @@ import { updateRecentEmoji } from '../../../lib/apiRequests/emoji';
 import { saveMessage } from '../../../lib/apiRequests/messages';
 import EmojiPicker from './EmojiPicker/EmojiPicker';
 import { uploadImage as requestUploadImage } from '../../../lib/apiRequests/images';
-import LoadingSpinner from '../../LoadingSpinner';
 import ErrorModal from '../../errorModal';
 import TextField from 'material-ui/TextField';
 
