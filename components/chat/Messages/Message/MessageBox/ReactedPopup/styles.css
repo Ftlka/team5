@@ -1,0 +1,13 @@
+.reacted-container
+{
+    font-size: 14px;
+    z-index: 10;
+    position: absolute;
+    border: 1px solid #4b0082;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #eecfba, #c5dde8);
+    max-height: 80px;
+    max-width: 145px;
+    overflow: hidden;
+    bottom: 45px;
+}

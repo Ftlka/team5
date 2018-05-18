@@ -4,7 +4,7 @@ const ReactMarkdown = require('react-markdown');
 import Lightbox from 'react-image-lightbox';
 import ImageMessage from './imageMessage/imageMessage';
 import { Picker } from 'emoji-mart';
-import Reactions from '../MessageBox/Reactions/Reactions';
+import Reactions from './Reactions/Reactions';
 
 import 'emoji-mart/css/emoji-mart.css';
 import './styles.css';
@@ -27,8 +27,10 @@ export default class Message extends React.Component {
             curTime: props.date && !isNaN(props.date) && (
                 moment(props.date).fromNow()
             ),
-            reactions: [{ emoji: 'barber', amount: 1, self: 'pressed' },
-                { emoji: 'crystal_ball', amount: 3, self: 'not-pressed' }],
+            reactions: [{ emoji: 'barber', amount: 2, self: 'pressed',
+                reacted: ['Ftlka', 'ftlkautophagia'] },
+            { emoji: 'crystal_ball', amount: 4, self: 'not-pressed',
+                reacted: ['akulin', 'snoward', 'darl0ck', 'Dan1elNeal'] }],
             showPicker: false,
             showPickerButton: false
         };

@@ -2,11 +2,14 @@ import React from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 import './styles.css';
 import { Emoji } from 'emoji-mart';
+import ReactedPopup from '../ReactedPopup/ReactedPopup';
 
 export default class Reactions extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { reactions: props.reactions };
+        this.state = {
+            reactions: props.reactions
+        };
         this.onReactionClick = this.onReactionClick.bind(this);
         this.update = this.update.bind(this);
         this.checkForZeros = this.checkForZeros.bind(this);
@@ -49,9 +52,18 @@ export default class Reactions extends React.Component {
             {this.state.reactions.map((reaction, idx) =>
                 (
                     <div key={idx} className={`container ${reaction.self}`}
-                        onClick={() => this.onReactionClick(reaction.emoji)}>
+                        onClick={() => this.onReactionClick(reaction.emoji)}
+                        onMouseEnter={event => {
+                            console.info(event.target);
+                            console.info('state', this.state);
+                            console.info('reacted', reaction.reacted);
+                            this.setState({ [reaction.emoji]: true });
+                        }}
+                        onMouseLeave={() => this.setState({ [reaction.emoji]: false })}>
                         <Emoji className='emoji' key={idx} emoji={reaction.emoji} size={16} />
                         <div className='amount'>{reaction.amount}</div>
+                        {this.state[reaction.emoji] &&
+                            <ReactedPopup reacted={reaction.reacted.slice()}/>}
                     </div>
                 )
             )}
