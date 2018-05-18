@@ -9,8 +9,6 @@ import Reactions from '../MessageBox/Reactions/Reactions';
 import 'emoji-mart/css/emoji-mart.css';
 import './styles.css';
 
-const maxAmount = 6;
-
 export default class Message extends React.Component {
     constructor(props) {
         super(props);
@@ -37,6 +35,8 @@ export default class Message extends React.Component {
         this.onEmojiSelect = this.onEmojiSelect.bind(this);
         this.onShowPickerButtonClick = this.onShowPickerButtonClick.bind(this);
         this.checkForZeros = this.checkForZeros.bind(this);
+        this.handleEscape = this.handleEscape.bind(this);
+        this.handleOutsideEmojiClick = this.handleOutsideEmojiClick.bind(this);
     }
 
     componentDidMount() {
@@ -47,11 +47,38 @@ export default class Message extends React.Component {
                 )
             });
         }, 60000);
+        document.addEventListener('keydown', this.handleEscape, false); // eslint-disable-line
+        document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleEscape, false); // eslint-disable-line
+        document.removeEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+    }
+
+    handleEscape(event) {
+        if (event.keyCode === 27) {
+            this.setState({
+                showPicker: false,
+                showPickerButton: false
+            });
+        }
+    }
+
+    handleOutsideEmojiClick(event) {
+        if (!this.pickerButton.contains(event.target) &&
+            !this.picker.contains(event.target)) {
+            this.setState({
+                showPicker: false,
+                showPickerButton: false
+            });
+        }
     }
 
     onShowPickerButtonClick() {
         this.setState({
-            showPicker: !this.state.showPicker
+            showPicker: !this.state.showPicker,
+            showPickerButton: true
         });
     }
 
@@ -89,32 +116,38 @@ export default class Message extends React.Component {
             this.state.reactions.push({ emoji: emoji.id, amount: 1, self: 'pressed' });
         }
         this.checkForZeros();
-        this.state.reactions.splice(maxAmount);
         this.setState({
             reactions: this.state.reactions,
-            showPicker: !this.state.showPicker
+            showPicker: !this.state.showPicker,
+            showPickerButton: false
         });
     }
 
     render() {
         return <div className='messages-container'>
             {this.state.showPicker &&
-                <Picker
-                    className={`${this.state.position}-picker-window`}
-                    onClick={this.onEmojiSelect}
-                    showPreview={false}
-                    color='lightsalmon'
-                    set='emojione'
-                    perLine='6'
-                    style={{
-                        zIndex: '10',
-                        position: 'absolute',
-                        height: '150px',
-                        overflow: 'hidden'
-                    }}
-                    l18n={{ search: null }}
-                    exclude={['recent']}
-                />
+                <div className={`${this.state.position}-picker-container`}
+                    ref={picker => {
+                        this.picker = picker;
+                    }}>
+                    <Picker
+                        className={`${this.state.position}-picker-window`}
+                        onClick={this.onEmojiSelect}
+                        showPreview={false}
+                        color='lightsalmon'
+                        set='emojione'
+                        perLine='6'
+                        style={{
+                            zIndex: '100',
+                            opacity: '.99',
+                            transform: 'translateX(0)',
+                            height: '150px',
+                            overflow: 'hidden',
+                            border: '2px sold #f0f'
+                        }}
+                        l18n={{ search: null }}
+                        exclude={['recent']}
+                    /></div>
             }
             <li
                 className={this.state.position}>
@@ -132,7 +165,7 @@ export default class Message extends React.Component {
                     )}</div>
                 <div className='msg'
                     onMouseEnter={() => this.setState({ showPickerButton: true })}
-                    onMouseLeave={() => this.setState({ showPickerButton: false })}>
+                    onMouseLeave={() => this.setState({ showPickerButton: this.state.showPicker })}>
                     <a
                         className='message__user-link'
                         onClick={this.props.onTitleClick}>{this.state.author}</a>
@@ -146,6 +179,9 @@ export default class Message extends React.Component {
                     {this.state.showPickerButton
                         ? <div className={`show-picker-button ${this.state.position}-picker`}
                             onClick={this.onShowPickerButtonClick}
+                            ref={pickerButton => {
+                                this.pickerButton = pickerButton;
+                            }}
                         >&#9786; </div>
                         : <div className={`empty-div ${this.state.position}-picker`}></div>}
                     <ReactMarkdown renderers={{

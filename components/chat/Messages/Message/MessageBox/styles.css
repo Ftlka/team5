@@ -153,14 +153,22 @@ a
     position: relative;
 }
 
-.self-picker-window
+.other-picker-container
 {
-    border: 2px solid coral !important;
-    right: 0 !important;
+    position: absolute;
+    height: 150px;
+    width: 235px;
+    right: 10px;
+    margin-top: -5px;
+    z-index: 1;
 }
 
-.other-picker-window
+.self-picker-container
 {
-    border: 2px solid red !important;
-    left: 0 !important;
+    position: absolute;
+    height: 150px;
+    width: 235px;
+    left: 10px;
+    margin-top: -5px;    
+    z-index: 1;
 }
