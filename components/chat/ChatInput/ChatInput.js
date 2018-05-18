@@ -293,7 +293,7 @@ export default class ChatInput extends React.Component {
                             id='multiline-flexible'
                             label='Введите новое сообщение'
                             multiline
-                            rowsMax='1'
+                            rowsMax='3'
                             value={this.state.messageText + this.state.recognizedText}
                             placeholder='Привет'
                             onChange={this.handleChange}
@@ -304,6 +304,7 @@ export default class ChatInput extends React.Component {
                             inputRef={chatInput => {
                                 this.chatInput = chatInput;
                             }}
+
                         />
 
                         <div className='chat-input__buttons'>

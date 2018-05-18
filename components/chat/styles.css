@@ -10,7 +10,7 @@
     grid-template-areas: 'chat-controls'
         'messages'
         'chat-input';
-    grid-template-rows: 50px auto 70px;
+    grid-template-rows: 50px auto auto;
 
     padding-top: 11px;
     margin-left: 40px;

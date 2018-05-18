@@ -10,9 +10,6 @@
 {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    top: 20px;
-    right: 30px;
 }
 
 .chat-input__show-picker-button
@@ -25,6 +22,9 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .file-input
@@ -44,7 +44,7 @@
 
 .chat-input__input-elements > :first-child
 {
-    width: 90% !important;
+    width: 100% !important;
 }
 
 .chat-input__sprite
