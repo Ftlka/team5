@@ -9,6 +9,7 @@ import ErrorModal from '../../errorModal';
 import Dropzone from 'react-dropzone';
 import TextField from 'material-ui/TextField';
 
+import ChatInputButtons from './ChatInputButtons/ChatInputButtons';
 import Recognizer from '../../../lib/Recognizer/Recognizer';
 import './styles.css';
 import 'emoji-mart/css/emoji-mart.css';
@@ -307,46 +308,20 @@ export default class ChatInput extends React.Component {
 
                         />
 
-                        <div className='chat-input__buttons'>
-                            <div className='chat-input__show-picker-button'
-                                onClick={this.onShowPickerButtonClick}
-                                ref={pickerButton => {
-                                    this.pickerButton = pickerButton;
-                                }}
-                            >
-                                <div className='chat-input__sprite chat-input__sprite-emoji' />
-                            </div>
-
-                            {Recognizer.isAvailable() &&
-                                <div className='chat-input__recognition-button'>
-                                    {!this.state.isRecognitionStarted
-                                        ? <div
-                                            className='chat-input__sprite chat-input__sprite-mic'
-                                            onClick={this.startRecognition}
-                                        />
-                                        : <div
-                                            className={`chat-input__sprite
-                                                chat-input__sprite-crossed-mic`}
-                                            onClick={this.stopRecognition}
-                                        />
-                                    }
-                                </div>
-                            }
-
-                            <label className='chat-input__file-label' htmlFor='file-input'>
-                                <div className='chat-input__sprite chat-input__sprite-file' />
-                            </label>
-                        </div>
+                        <ChatInputButtons
+                            isRecognizerAvailable={Recognizer.isAvailable()}
+                            onShowPickerButtonClick={this.onShowPickerButtonClick}
+                            pickerButtonRef={pickerButton => {
+                                this.pickerButton = pickerButton;
+                            }}
+                            isRecognitionStarted={this.state.isRecognitionStarted}
+                            startRecognition={this.startRecognition}
+                            stopRecognition={this.stopRecognition}
+                            onFileInputChange={this.onFileInputChange}
+                        />
 
                         {this.state.isRecognitionStarted &&
                             <div className='chat-input__red-dot' />}
-
-                        <input
-                            type='file'
-                            onChange={this.onFileInputChange}
-                            className='file-input'
-                            id='file-input'
-                        />
                     </div>
                 </div>
             </Dropzone>

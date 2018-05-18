@@ -6,17 +6,6 @@
     z-index: 999;
 }
 
-.chat-input__buttons
-{
-    display: flex;
-    flex-direction: row;
-}
-
-.chat-input__show-picker-button
-{
-    cursor: pointer;
-}
-
 .chat-input__input-elements
 {
     position: relative;
@@ -27,60 +16,9 @@
     align-items: center;
 }
 
-.file-input
-{
-    display: none;
-}
-
-.chat-input__file-label
-{
-    cursor: pointer;
-}
-
-.chat-input__recognition-button
-{
-    cursor: pointer;
-}
-
 .chat-input__input-elements > :first-child
 {
     width: 100% !important;
-}
-
-.chat-input__sprite
-{
-    background-image: url(/static/images/chat-sprites.png);
-    background-repeat: no-repeat;
-    display: block;
-    width: 30px;
-    height: 30px;
-    margin: 0 3px;
-
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-.chat-input__sprite-emoji
-{
-    background-position: -45px -5px;
-}
-
-.chat-input__sprite-file
-{
-    background-position: -5px -5px;
-}
-
-.chat-input__sprite-mic
-{
-    background-position: -5px -45px;
-}
-
-.chat-input__sprite-crossed-mic
-{
-    background-position: -45px -45px;
 }
 
 .chat-input__red-dot
