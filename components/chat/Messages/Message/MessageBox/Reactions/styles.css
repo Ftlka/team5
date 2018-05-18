@@ -31,5 +31,6 @@
 .pressed
 {
     border-color: #4b0082;
-    background-image: linear-gradient(45deg, rgb(238, 207, 186), rgb(197, 221, 232));
+    background-image: linear-gradient(45deg, rgb(238, 207, 186),
+    rgb(197, 221, 232));
 }

@@ -41,7 +41,11 @@ export default class Messages extends React.Component {
     }
 
     groupReactionsByEmoji(reactions) {
+        if (!reactions) {
+            return [];
+        }
         const emojiDict = {};
+
         for (let reaction of reactions) {
             const { emoji, username } = reaction;
             if (!(emoji in emojiDict)) {
@@ -60,9 +64,6 @@ export default class Messages extends React.Component {
     }
 
     render() {
-        console.info(this.state.messages);
-        console.info(this.state.currentUser);
-
         return (
             <ol className='messages'>
                 {this.state.messages.map((message, idx) => {
