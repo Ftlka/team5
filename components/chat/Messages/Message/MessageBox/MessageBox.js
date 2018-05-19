@@ -4,6 +4,7 @@ const ReactMarkdown = require('react-markdown');
 import Lightbox from 'react-image-lightbox';
 import ImageMessage from './imageMessage/imageMessage';
 import { Picker } from 'emoji-mart';
+import io from 'socket.io-client';
 import Reactions from './Reactions/Reactions';
 import { updateReactions } from '../../../../../lib/apiRequests/reactions';
 
@@ -34,9 +35,9 @@ export default class Message extends React.Component {
             showPicker: false,
             showPickerButton: false
         };
+        this.socket = io();
         this.onEmojiSelect = this.onEmojiSelect.bind(this);
         this.onShowPickerButtonClick = this.onShowPickerButtonClick.bind(this);
-        this.checkForZeros = this.checkForZeros.bind(this);
         this.handleEscape = this.handleEscape.bind(this);
         this.handleOutsideEmojiClick = this.handleOutsideEmojiClick.bind(this);
     }
@@ -85,48 +86,36 @@ export default class Message extends React.Component {
     }
 
     patchReaction(emoji) {
-        const reaction = this.state.reactions.find(r => r.emoji === emoji);
-        if (reaction) {
-            if (reaction.self === 'not-pressed') {
-                reaction.amount++;
-                reaction.self = 'pressed';
-                reaction.reacted.push(this.state.currentUser);
-            } else {
-                reaction.amount--;
-                reaction.self = 'not-pressed';
-                console.info(reaction);
-                const index = reaction.reacted.indexOf(this.state.currentUser);
-                reaction.reacted.splice(index, 1);
-            }
+        const username = this.state.currentUser;
+        if (!this.state.reactions) {
+            this.state.reactions = [];
+        }
+        const index = this.state.reactions.findIndex(
+            r => r.emoji === emoji && r.username === username);
+        if (index !== -1) {
+            this.state.reactions.splice(index, 1);
         } else {
-            this.state.reactions.push({ emoji, amount: 1, self: 'pressed',
-                reacted: [this.state.currentUser] });
-        }
-
-        console.info(this.state.reactions);
-    }
-
-    checkForZeros() {
-        for (let i = 0; i < this.state.reactions.length; i++) {
-            if (this.state.reactions[i].amount === 0) {
-                this.state.reactions.splice(i, 1);
-
-                return;
-            }
+            this.state.reactions.push({ username, emoji });
         }
     }
+
 
     onEmojiSelect(emoji) {
         this.patchReaction(emoji.id);
-        this.checkForZeros();
         this.setState({
             reactions: this.state.reactions,
             showPicker: !this.state.showPicker
         });
+        const { type, text, reactions, author, date, id, metadata } = this.state;
+        const message = { type, text, reactions, author,
+            date, conversationId: this.props.conversationId, _id: id, metadata };
+        this.socket.emit('updateMessage', message);
         updateReactions(emoji.id, this.state.id);
     }
 
     render() {
+        this.state.reactions = this.props.reactions;
+
         return <div className='messages-container'>
             {this.state.showPicker &&
                 <div className={`${this.state.position}-picker-container`}
@@ -203,8 +192,9 @@ export default class Message extends React.Component {
                     <br />
                     <Reactions
                         className='reactions'
-                        reactions={this.state.reactions}
+                        reactions={this.props.reactions}
                         onEmojiSelect={this.onEmojiSelect}
+                        currentUser={this.state.currentUser}
                     />
                 </div>
             </li>

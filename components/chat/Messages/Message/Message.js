@@ -35,8 +35,9 @@ export default class Message extends React.Component {
                 type={this.state.type}
                 image={this.state.imageUrl}
                 text={this.state.text}
-                reactions={this.state.reactions}
-                date={new Date(this.state.date)}
+                reactions={this.props.reactions}
+                date={new Date(this.props.date)}
+                conversationId={this.props.conversationId}
                 renderAddCmp={() => {
                     return this.state.metadata
                         ? <Metadata metadata={this.state.metadata}

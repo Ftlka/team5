@@ -13,9 +13,34 @@ export default class Reactions extends React.Component {
         this.onEmojiSelect = props.onEmojiSelect;
     }
 
+    groupReactionsByEmoji(reactions) {
+        if (!reactions) {
+            return [];
+        }
+        const emojiDict = {};
+
+        for (let reaction of reactions) {
+            const { emoji, username } = reaction;
+            if (!(emoji in emojiDict)) {
+                emojiDict[emoji] = { amount: 0, reacted: [], self: 'not-pressed' };
+            }
+            if (this.props.currentUser === username) {
+                emojiDict[emoji].self = 'pressed';
+            }
+            emojiDict[emoji].amount++;
+            emojiDict[emoji].reacted.push(username);
+        }
+
+        return Object.keys(emojiDict).map(emoji => {
+            return { ...emojiDict[emoji], emoji };
+        });
+    }
+
     render() {
+        const reactions = this.groupReactionsByEmoji(this.props.reactions);
+
         return (<div className='reactions'>
-            {this.state.reactions.map((reaction, idx) =>
+            {reactions.map((reaction, idx) =>
                 (
                     <div key={idx} className={`container ${reaction.self}`}
                         onClick={() => this.onEmojiSelect({ id: reaction.emoji })}
