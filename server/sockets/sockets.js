@@ -7,6 +7,7 @@ module.exports.configureIo = (io) => {
     io.on('connection', socket => {
         socket.on('message', async (data) => {
             const message = await MessageFactory.create(data);
+            console.info(message);
             io.emit(`message_${data.conversationId}`, message);
 
             const conversation = await Conversation.findById(data.conversationId);

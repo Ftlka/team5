@@ -132,16 +132,18 @@ export default class ChatInput extends React.Component {
         await this.stopRecognition();
         const messageText = this.state.messageText.replace(/\n/g, '\n\n').trim();
 
-        const message = {
+        let message = {
             type: 'text',
             conversationId: this.props.conversationId,
             text: messageText,
             author: this.props.currentUser
         };
 
-        this.props.socket.emit('message', message);
+        const savedMessage = await saveMessage(message, this.props.conversationId);
+        // console.info(savedMessage.data);
+        this.props.socket.emit('message', savedMessage.data);
 
-        saveMessage(message, this.props.conversationId);
+
         updateRecentEmoji(this.state.recentEmoji);
 
         this.setState({
