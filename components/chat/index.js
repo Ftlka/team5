@@ -48,10 +48,6 @@ export default class Chat extends React.Component {
         this.closeParticipantsModal = this.closeParticipantsModal.bind(this);
 
         this.handleMessage = this.handleMessage.bind(this);
-        this.handleNotification = this.handleNotification.bind(this);
-        this.handleNotSupported = this.handleNotSupported.bind(this);
-        this.handlePermissionGranted = this.handlePermissionGranted.bind(this);
-        this.handlePermissionDenied = this.handlePermissionDenied.bind(this);
 
         this.handleCloseErrorModal = this.handleCloseErrorModal.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
@@ -63,21 +59,6 @@ export default class Chat extends React.Component {
         this.setState({ showErrorModal: false });
     }
 
-    handlePermissionGranted() {
-        this.setState({
-            ignore: false
-        });
-    }
-    handlePermissionDenied() {
-        this.setState({
-            ignore: true
-        });
-    }
-    handleNotSupported() {
-        this.setState({
-            ignore: true
-        });
-    }
 
     closeProfileModal() {
         this.setState({ showProfileModal: false });

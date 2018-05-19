@@ -13,12 +13,11 @@ module.exports.configureIo = (io) => {
             sendMessageNotification(conversation, message);
         });
 
-        socket.on('conversationNewUser', (data) => {
-            const conversation = data.conversation;
-            io.emit(`conversationNewUser_${conversation._id}`, conversation);
-            socket.broadcast.emit(`conversationNewUser_${data.addedUser}`, conversation);
+        socket.on('conversationNewUser', async (data) => {
+            io.emit(`conversationNewUser_${data.conversation._id}`, data.conversation);
+            socket.broadcast.emit(`conversationNewUser_${data.addedUser}`, data.conversation);
 
-
+            const conversation = await Conversation.findById(data.conversation._id);
             sendNewUserNotification(conversation, data.addedUser);
         });
 
