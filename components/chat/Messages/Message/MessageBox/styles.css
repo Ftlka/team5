@@ -156,7 +156,7 @@ a
     width: 235px;
     right: 13px;
     margin-top: -5px;
-    z-index: 1;
+    z-index: 100;
 }
 
 .self-picker-container
@@ -166,7 +166,7 @@ a
     width: 235px;
     left: 10px;
     margin-top: -5px;
-    z-index: 1;
+    z-index: 100;
 }
 
 .emoji-mart-scroll
