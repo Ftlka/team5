@@ -10,6 +10,7 @@ import { getConversations } from '../../lib/apiRequests/conversations';
 import { getContacts } from '../../lib/apiRequests/contacts';
 import { getMessages } from '../../lib/apiRequests/messages';
 import { initSounds } from '../../lib/sounds/sounds';
+import { initServiceWorker } from '../../lib/ServiceWorker/Initializer';
 
 import './styles.css';
 
@@ -45,6 +46,8 @@ export default class IndexPage extends Component {
     }
 
     componentDidMount() {
+        initServiceWorker();
+
         this.socket = io();
         if (this.state.selectedConversation) {
             this.setState({ loading: true });
