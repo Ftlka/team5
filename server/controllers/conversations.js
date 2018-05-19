@@ -38,6 +38,15 @@ async function tryCreateConversation(conversation) {
             error: new ErrorInfo(400, 'Пользователь не существует')
         };
     }
+    const nonUniqueUser = getNonUniqueUser(conversation.users);
+    if (nonUniqueUser) {
+        return {
+            conversation: null,
+            error: new ErrorInfo(400,
+                `Пользователь ${nonUniqueUser} встречается больше одного раза`)
+        };
+    }
+
     if (conversation.isPrivate) {
         const existingChat = await getPrivateChat(conversation.users);
         if (existingChat) {
@@ -58,6 +67,16 @@ async function tryCreateConversation(conversation) {
     }
 
     return { error: null, conversation };
+}
+
+function getNonUniqueUser(users) {
+    const counting = users.reduce((a, b) =>
+        Object.assign(a, { [b]: (a[b] || 0) + 1 }), {});
+    for (let name in counting) {
+        if (counting[name] > 1) {
+            return name;
+        }
+    }
 }
 
 module.exports.addUser = async (req, res) => {
