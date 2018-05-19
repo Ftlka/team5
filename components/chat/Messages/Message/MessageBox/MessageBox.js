@@ -54,7 +54,9 @@ export default class Message extends React.Component {
                         />
                     )}</div>
                 <div className='msg'>
-                    <a onClick={this.props.onTitleClick}>{this.state.author}</a>
+                    <a
+                        className='message__user-link'
+                        onClick={this.props.onTitleClick}>{this.state.author}</a>
                     {this.state.type === 'image'
                         ? (<ImageMessage
                             image={this.state.image}

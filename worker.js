@@ -21,7 +21,7 @@ self.addEventListener('push', e => {
 self.addEventListener('notificationclick', e => {
     e.notification.close();
 
-    let path = e.target.origin + '/';
+    const path = e.target.origin + '/';
     e.waitUntil(
         clients.matchAll({
             type: 'window',

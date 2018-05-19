@@ -104,3 +104,11 @@ a
 {
     width: 13em;
 }
+
+.msg p {
+    margin: 2px 0;
+}
+
+.message__user-link {
+    margin-bottom: 5px;
+}
