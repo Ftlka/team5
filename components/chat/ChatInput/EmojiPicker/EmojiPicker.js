@@ -26,7 +26,6 @@ export default class EmojiPicker extends React.Component {
                 onClick={this.state.onEmojiSelect}
                 showPreview={false}
                 color='lightsalmon'
-                native={true}
                 style={{
                     width: '15em',
                     minWidth: '180px',
@@ -35,6 +34,8 @@ export default class EmojiPicker extends React.Component {
                     right: '20px',
                     zIndex: 100
                 }}
+                emojisToShowFilter={(emoji)=>Boolean(emoji.added_in <= 8)}
+                native={true}
                 i18n={{ categories: { recent: 'Last used' } }}
             />
         );

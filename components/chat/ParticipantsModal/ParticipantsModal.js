@@ -13,7 +13,8 @@ export default class ParticipantsModal extends React.Component {
         return {
             showModal: nextProps.showModal,
             handleCloseModal: nextProps.handleCloseModal,
-            conversationId: nextProps.conversationId
+            conversationId: nextProps.conversationId,
+            currentConversation: nextProps.currentConversation
         };
     }
 
@@ -41,6 +42,7 @@ export default class ParticipantsModal extends React.Component {
                 }}
             >
                 <Participants
+                    currentConversation={this.state.currentConversation}
                     conversationId={this.state.conversationId}
                 />
             </ReactModal>);

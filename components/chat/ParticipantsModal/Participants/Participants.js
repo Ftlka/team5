@@ -3,6 +3,7 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import copy from 'copy-to-clipboard';
+import AddPersonForm from '../../AddPersonForm/AddPersonForm.js';
 import Snackbar from 'material-ui/Snackbar';
 import ListSubheader from 'material-ui/List/ListSubheader';
 
@@ -38,6 +39,13 @@ export default class Participants extends React.Component {
 
         return (
             <div className='participants-container'>
+                <ListSubheader>
+                    {!this.props.currentConversation.isPrivate &&
+                <AddPersonForm
+                    conversationId={this.props.conversationId}
+                />}
+                </ListSubheader>
+
                 {this.state.inviteLink &&
                 <ListSubheader>
                     <Button onClick={()=>{
