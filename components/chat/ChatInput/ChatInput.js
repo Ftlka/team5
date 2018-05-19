@@ -132,6 +132,12 @@ export default class ChatInput extends React.Component {
         await this.stopRecognition();
         const messageText = this.state.messageText.replace(/\n/g, '\n\n').trim();
 
+        if (!messageText) {
+            this.setState({ messageText: '' });
+
+            return;
+        }
+
         const message = {
             type: 'text',
             conversationId: this.props.conversationId,
@@ -279,7 +285,6 @@ export default class ChatInput extends React.Component {
                         onKeyPress={this.onInputPressKey}
                         margin='normal'
                         autoFocus
-                        required
                         inputRef={chatInput => {
                             this.chatInput = chatInput;
                         }}
