@@ -53,6 +53,7 @@
     "socket.io-client": "^2.1.0",
     "twilio": "^3.16.0",
     "uuid": "^3.2.1",
+    "web-push": "^3.3.1",
     "webpack": "3.1.0"
   },
   "devDependencies": {
@@ -81,7 +82,9 @@
       "CALLER_ACCOUNT_SID": "@caller-account-sid",
       "CALLER_AUTH_TOKEN": "@caller-auth-token",
       "CALLER_NUMBER": "@caller-number",
-      "CALLER_TWIML": "@caller-twiml"
+      "CALLER_TWIML": "@caller-twiml",
+      "PUBLIC_VAPID_KEY": "@public-vapid-key",
+      "PRIVATE_VAPID_KEY": "@private-vapid-key"
     }
   }
 }

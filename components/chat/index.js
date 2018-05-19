@@ -102,31 +102,11 @@ export default class Chat extends React.Component {
 
     componentDidMount() {
         this.socket.on(`message_${this.props.messagesInfo.conversationId}`,
-            this.handleNotification);
+            this.handleMessage);
     }
 
     componentWillUnmount() {
         this.socket.removeListener(`message_${this.props.messagesInfo.conversationId}`);
-    }
-
-    handleNotification(message) {
-        if (this.state.currentUser === message.author) {
-            return this.handleMessage(message);
-        }
-
-        const options = {
-            tag: Date.now(),
-            body: message.type === 'text'
-                ? message.text
-                : 'Image received',
-            icon: '',
-            dir: 'ltr'
-        };
-        this.setState({
-            title: message.author,
-            options: options
-        });
-        this.handleMessage(message);
     }
 
     handleMessage(message) {

@@ -20,5 +20,9 @@ module.exports = {
         authToken: process.env.CALLER_AUTH_TOKEN,
         callerNumber: process.env.CALLER_NUMBER,
         twiml: process.env.CALLER_TWIML
+    },
+    GCM: {
+        publicVapidKey: process.env.PUBLIC_VAPID_KEY,
+        privateVapidKey: process.env.PRIVATE_VAPID_KEY
     }
 };
