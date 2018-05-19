@@ -14,8 +14,8 @@
 
 .metadata-self
 {
-   margin-left: 69%;
-   border-left: 2px solid #4b0082;
+    margin-left: 69%;
+    border-left: 2px solid #4b0082;
 }
 
 .metadata-other
@@ -26,8 +26,9 @@
 
 .metadata:hover
 {
-    background: linear-gradient(to left top, rgb(176, 224, 230), rgb(255, 192, 203));
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .3);    
+    background: linear-gradient(to left top, rgb(176, 224, 230),
+    rgb(255, 192, 203));
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .3);
 }
 
 .metadata__link
