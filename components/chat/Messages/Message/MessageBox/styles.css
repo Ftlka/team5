@@ -95,13 +95,16 @@ a
     width: 13em;
 }
 
-.msg p {
+.msg p
+{
     margin: 2px 0;
 }
 
-.message__user-link {
+.message__user-link
+{
     margin-bottom: 5px;
 }
+
 .show-picker-button
 {
     line-height: 20px;
