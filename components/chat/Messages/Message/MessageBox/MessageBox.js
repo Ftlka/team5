@@ -71,7 +71,7 @@ export default class Message extends React.Component {
     }
 
     handleOutsideEmojiClick(event) {
-        if (!this.pickerButton.contains(event.target) &&
+        if (this.pickerButton && this.picker && !this.pickerButton.contains(event.target) &&
             !this.picker.contains(event.target)) {
             this.setState({
                 showPicker: false,

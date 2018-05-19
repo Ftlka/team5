@@ -26,9 +26,8 @@ export default class EmojiPicker extends React.Component {
                 onClick={this.state.onEmojiSelect}
                 showPreview={false}
                 color='lightsalmon'
+                perLine='7'
                 style={{
-                    width: '15em',
-                    minWidth: '180px',
                     position: 'absolute',
                     bottom: '70px',
                     right: '20px',
