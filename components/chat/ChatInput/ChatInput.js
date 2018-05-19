@@ -4,9 +4,7 @@ import { updateRecentEmoji } from '../../../lib/apiRequests/emoji';
 import { saveMessage } from '../../../lib/apiRequests/messages';
 import EmojiPicker from './EmojiPicker/EmojiPicker';
 import { uploadImage as requestUploadImage } from '../../../lib/apiRequests/images';
-import LoadingSpinner from '../../LoadingSpinner';
 import ErrorModal from '../../errorModal';
-import Dropzone from 'react-dropzone';
 import TextField from 'material-ui/TextField';
 
 import ChatInputButtons from './ChatInputButtons/ChatInputButtons';
@@ -244,87 +242,65 @@ export default class ChatInput extends React.Component {
     }
 
     render() {
-        const loading = this.state.loading;
-        const { dropzoneActive } = this.state;
-        const overlayStyle = {
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            zIndex: 9999,
-            padding: '2.5em 0',
-            background: 'rgba(0,0,0,0.5)',
-            textAlign: 'center',
-            color: '#fff'
-        };
+
 
         return (
-            <Dropzone
-                disableClick
-                style={{ position: 'relative' }}
-                onDrop={this.onDrop}
-                onDragEnter={this.onDragEnter}
-                onDragLeave={this.onDragLeave}
-            >
-                {dropzoneActive && <div style={overlayStyle}>Drop images...</div>}
-                <div className='chat-input'>
-                    <ErrorModal
-                        showModal={this.state.showErrorModal}
-                        error={this.state.error}
-                        handleCloseModal={this.handleCloseErrorModal}
+
+            <div className='chat-input'>
+                <ErrorModal
+                    showModal={this.state.showErrorModal}
+                    error={this.state.error}
+                    handleCloseModal={this.handleCloseErrorModal}
+                />
+
+
+                {this.state.showPicker
+                    ? <div className='picker-container' ref={pickerContainer => {
+                        this.pickerContainer = pickerContainer;
+                    }}>
+                        <EmojiPicker
+                            recentEmoji={this.state.shownRecentEmoji}
+                            onEmojiSelect={this.onEmojiSelect}
+                        />
+                    </div>
+                    : null
+                }
+
+                <div className='chat-input__input-elements'>
+                    <TextField
+                        id='multiline-flexible'
+                        label='Введите новое сообщение'
+                        multiline
+                        rowsMax='3'
+                        value={this.state.messageText + this.state.recognizedText}
+                        placeholder='Привет'
+                        onChange={this.handleChange}
+                        onKeyPress={this.onInputPressKey}
+                        margin='normal'
+                        autoFocus
+                        required
+                        inputRef={chatInput => {
+                            this.chatInput = chatInput;
+                        }}
+
                     />
 
-                    {loading ? <LoadingSpinner /> : null}
+                    <ChatInputButtons
+                        isRecognizerAvailable={Recognizer.isAvailable()}
+                        onShowPickerButtonClick={this.onShowPickerButtonClick}
+                        pickerButtonRef={pickerButton => {
+                            this.pickerButton = pickerButton;
+                        }}
+                        isRecognitionStarted={this.state.isRecognitionStarted}
+                        startRecognition={this.startRecognition}
+                        stopRecognition={this.stopRecognition}
+                        onFileInputChange={this.onFileInputChange}
+                    />
 
-                    {this.state.showPicker
-                        ? <div className='picker-container' ref={pickerContainer => {
-                            this.pickerContainer = pickerContainer;
-                        }}>
-                            <EmojiPicker
-                                recentEmoji={this.state.shownRecentEmoji}
-                                onEmojiSelect={this.onEmojiSelect}
-                            />
-                        </div>
-                        : null
-                    }
-
-                    <div className='chat-input__input-elements'>
-                        <TextField
-                            id='multiline-flexible'
-                            label='Введите новое сообщение'
-                            multiline
-                            rowsMax='3'
-                            value={this.state.messageText + this.state.recognizedText}
-                            placeholder='Привет'
-                            onChange={this.handleChange}
-                            onKeyPress={this.onInputPressKey}
-                            margin='normal'
-                            autoFocus
-                            required
-                            inputRef={chatInput => {
-                                this.chatInput = chatInput;
-                            }}
-
-                        />
-
-                        <ChatInputButtons
-                            isRecognizerAvailable={Recognizer.isAvailable()}
-                            onShowPickerButtonClick={this.onShowPickerButtonClick}
-                            pickerButtonRef={pickerButton => {
-                                this.pickerButton = pickerButton;
-                            }}
-                            isRecognitionStarted={this.state.isRecognitionStarted}
-                            startRecognition={this.startRecognition}
-                            stopRecognition={this.stopRecognition}
-                            onFileInputChange={this.onFileInputChange}
-                        />
-
-                        {this.state.isRecognitionStarted &&
+                    {this.state.isRecognitionStarted &&
                             <div className='chat-input__red-dot' />}
-                    </div>
                 </div>
-            </Dropzone>
+            </div>
         );
     }
 }

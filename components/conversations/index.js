@@ -5,6 +5,7 @@ import moment from 'moment';
 import Search from './Search/Search.js';
 import CreateConversationModal from './CreateConversationModal/CreateConversationModal.js';
 import { newMessageSound, newConversationSound, selfMessageSound } from '../../lib/sounds/sounds';
+import { initVibrate } from '../../lib/Vibrator/Vibrator';
 import ChatList from './ChatList/ChatList';
 import './styles.css';
 
@@ -49,6 +50,7 @@ export default class Conversations extends React.Component {
     notifyAboutMessage(message) {
         if (this.props.currentUser !== message.author) {
             newMessageSound.play();
+            initVibrate('message');
         } else {
             selfMessageSound.play();
         }
@@ -87,7 +89,7 @@ export default class Conversations extends React.Component {
         }
 
         newConversationSound.play();
-
+        initVibrate('newConversation');
         this.addNewConversation(newConversation);
     }
 
