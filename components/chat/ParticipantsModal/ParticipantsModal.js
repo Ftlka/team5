@@ -35,9 +35,11 @@ export default class ParticipantsModal extends React.Component {
                         display: 'flex',
                         justifyContent: 'center',
                         margin: 'auto',
+                        marginBottom: '28%',
                         border: null,
-                        height: '40%',
-                        width: '43%'
+                        width: '43%',
+                        padding: 0,
+                        top: '90px'
                     }
                 }}
             >

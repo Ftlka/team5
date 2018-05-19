@@ -22,6 +22,7 @@
 .chat-input__input-elements > :first-child
 {
     width: 100% !important;
+    margin-left: 17px;
 }
 
 .chat-input__red-dot
