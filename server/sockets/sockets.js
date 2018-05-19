@@ -7,7 +7,6 @@ module.exports.configureIo = (io) => {
     io.on('connection', socket => {
         socket.on('message', async (data) => {
             const message = await MessageFactory.create(data);
-            console.info(message);
             io.emit(`message_${data.conversationId}`, message);
 
             const conversation = await Conversation.findById(data.conversationId);
@@ -31,9 +30,12 @@ module.exports.configureIo = (io) => {
         });
 
         socket.on('updateMessage', (data) => {
-            console.info(data);
             console.info('==========');
-            io.emit(`updateMessage_${data.conversationId}`, data);
+            console.info(data);
+            // io.emit(`updateMessage_${data.conversationId}`, data);
+            console.info(`updateMessage_${data._id}`);
+            io.emit(`updateMessage_${data._id}`, data);
+            console.info('==========');
         });
     });
 };

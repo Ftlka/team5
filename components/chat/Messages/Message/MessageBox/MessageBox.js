@@ -4,7 +4,6 @@ const ReactMarkdown = require('react-markdown');
 import Lightbox from 'react-image-lightbox';
 import ImageMessage from './imageMessage/imageMessage';
 import { Picker } from 'emoji-mart';
-import io from 'socket.io-client';
 import Reactions from './Reactions/Reactions';
 import { updateReactions } from '../../../../../lib/apiRequests/reactions';
 
@@ -25,24 +24,26 @@ export default class Message extends React.Component {
             image: props.image,
             avatar: props.avatar,
             metadata: props.metadata,
+            reactions: props.reactions,
             isAvatarOpen: false,
             onMessageTitleClick: props.onMessageTitleClick,
             saveElementForScroll: props.saveElementForScroll,
             curTime: props.date && !isNaN(props.date) && (
                 moment(props.date).fromNow()
             ),
-            reactions: props.reactions,
             showPicker: false,
             showPickerButton: false
         };
-        this.socket = io();
+
         this.onEmojiSelect = this.onEmojiSelect.bind(this);
         this.onShowPickerButtonClick = this.onShowPickerButtonClick.bind(this);
         this.handleEscape = this.handleEscape.bind(this);
         this.handleOutsideEmojiClick = this.handleOutsideEmojiClick.bind(this);
+        this.socket = props.socket;
     }
 
     componentDidMount() {
+        console.info('MessageBox componentDidMount');
         setInterval(() => {
             this.setState({
                 curTime: this.state.date && !isNaN(this.state.date) && (
@@ -52,11 +53,15 @@ export default class Message extends React.Component {
         }, 60000);
         document.addEventListener('keydown', this.handleEscape, false); // eslint-disable-line
         document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+        console.info(`updateMessage_${this.state.id}`);
+        this.socket.on(`updateMessage_${this.state.id}`, this.updateMessage.bind(this));
     }
 
     componentWillUnmount() {
+        console.info('MessageBox componentWillUnmount');
         document.removeEventListener('keydown', this.handleEscape, false); // eslint-disable-line
         document.removeEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
+        this.socket.removeListener(`updateMessage_${this.state._id}`);
     }
 
     handleEscape(event) {
@@ -99,6 +104,17 @@ export default class Message extends React.Component {
         }
     }
 
+    updateMessage(message) {
+        this.setState({
+            id: message._id,
+            text: message.text,
+            author: message.author,
+            type: message.type,
+            image: message.image,
+            metadata: message.metadata,
+            reactions: message.reactions
+        });
+    }
 
     onEmojiSelect(emoji) {
         this.patchReaction(emoji.id);
@@ -114,8 +130,6 @@ export default class Message extends React.Component {
     }
 
     render() {
-        this.state.reactions = this.props.reactions;
-
         return <div className='messages-container'>
             {this.state.showPicker &&
                 <div className={`${this.state.position}-picker-container`}
@@ -192,7 +206,7 @@ export default class Message extends React.Component {
                     <br />
                     <Reactions
                         className='reactions'
-                        reactions={this.props.reactions}
+                        reactions={this.state.reactions}
                         onEmojiSelect={this.onEmojiSelect}
                         currentUser={this.state.currentUser}
                     />

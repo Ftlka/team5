@@ -17,7 +17,8 @@ export default class Message extends React.Component {
             date: props.date,
             metadata: props.metadata,
             onMessageTitleClick: props.onMessageTitleClick,
-            saveElementForScroll: props.saveElementForScroll
+            saveElementForScroll: props.saveElementForScroll,
+            socket: props.socket
         };
     }
 
@@ -26,6 +27,7 @@ export default class Message extends React.Component {
 
         return <div ref={this.state.saveElementForScroll}>
             <MessageBox
+                socket={this.state.socket}
                 currentUser={this.state.currentUser}
                 id={this.state.id}
                 position={side}

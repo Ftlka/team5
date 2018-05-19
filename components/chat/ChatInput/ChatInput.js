@@ -140,7 +140,7 @@ export default class ChatInput extends React.Component {
         };
 
         const savedMessage = await saveMessage(message, this.props.conversationId);
-        // console.info(savedMessage.data);
+
         this.props.socket.emit('message', savedMessage.data);
 
 
