@@ -97,14 +97,11 @@ export default class Chat extends React.Component {
         this.selectDialog();
         this.socket.on(`message_${this.props.messagesInfo.conversationId}`,
             this.handleMessage);
-        this.socket.on(`updateMessage_${this.props.messagesInfo.conversationId}`,
-            this.handleUpdateMessage);
     }
 
     componentWillUnmount() {
         this.resetStyles();
         this.socket.removeListener(`message_${this.props.messagesInfo.conversationId}`);
-        this.socket.removeListener(`updateMessage_${this.props.messagesInfo.conversationId}`);
     }
 
     handleMessage(message) {
