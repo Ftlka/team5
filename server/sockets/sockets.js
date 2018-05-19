@@ -30,12 +30,7 @@ module.exports.configureIo = (io) => {
         });
 
         socket.on('updateMessage', (data) => {
-            console.info('==========');
-            console.info(data);
-            // io.emit(`updateMessage_${data.conversationId}`, data);
-            console.info(`updateMessage_${data._id}`);
             io.emit(`updateMessage_${data._id}`, data);
-            console.info('==========');
         });
     });
 };

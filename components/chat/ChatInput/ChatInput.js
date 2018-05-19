@@ -132,7 +132,7 @@ export default class ChatInput extends React.Component {
         await this.stopRecognition();
         const messageText = this.state.messageText.replace(/\n/g, '\n\n').trim();
 
-        let message = {
+        const message = {
             type: 'text',
             conversationId: this.props.conversationId,
             text: messageText,
