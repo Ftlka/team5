@@ -28,5 +28,9 @@ module.exports.configureIo = (io) => {
 
             sendNewConversationNotification(conversation);
         });
+
+        socket.on('updateMessage', (data) => {
+            io.emit(`updateMessage_${data._id}`, data);
+        });
     });
 };

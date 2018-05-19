@@ -49,7 +49,7 @@ export default class Chat extends React.Component {
         this.closeParticipantsModal = this.closeParticipantsModal.bind(this);
 
         this.handleMessage = this.handleMessage.bind(this);
-
+        this.handleUpdateMessage = this.handleUpdateMessage.bind(this);
         this.handleCloseErrorModal = this.handleCloseErrorModal.bind(this);
         this.onDragLeave = this.onDragLeave.bind(this);
         this.onDragEnter = this.onDragEnter.bind(this);
@@ -158,6 +158,18 @@ export default class Chat extends React.Component {
     }
 
 
+    handleUpdateMessage(updatedMessage) {
+        console.info(updatedMessage);
+        const newMessages = this.state.messages.slice();
+        const index = newMessages.findIndex(msg => msg._id === updatedMessage._id);
+        if (index !== -1) {
+            newMessages[index] = updatedMessage;
+            this.setState({
+                messages: newMessages
+            });
+        }
+    }
+
     render() {
         const loading = this.state.loading;
         const { dropzoneActive } = this.state;
@@ -218,6 +230,8 @@ export default class Chat extends React.Component {
                     messages={this.state.messages}
                     currentUser={this.state.currentUser}
                     onMessageTitleClick={this.openProfileModal}
+                    conversationId={this.props.messagesInfo.conversationId}
+                    socket={this.socket}
                 />
 
                 <ChatInput

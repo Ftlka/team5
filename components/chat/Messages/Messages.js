@@ -43,7 +43,7 @@ export default class Messages extends React.Component {
     render() {
         return (
             <ol className='messages'>
-                {this.state.messages.map((message, idx) => {
+                {this.props.messages.map((message, idx) => {
 
                     return (
                         <Message
@@ -54,9 +54,13 @@ export default class Messages extends React.Component {
                             imageUrl={message.imageUrl}
                             author={message.author}
                             date={message.date}
+                            reactions={message.reactions}
                             metadata={message.metadata}
                             onMessageTitleClick={this.state.onMessageTitleClick}
                             saveElementForScroll={this.saveElementForScroll}
+                            id={message._id}
+                            conversationId={this.props.conversationId}
+                            socket={this.props.socket}
                         />
                     );
                 }
