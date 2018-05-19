@@ -2,11 +2,12 @@ const MessageFactory = require('../models/Message/MessageFactory/MessageFactory'
 const { sendMessageNotification,
     sendNewConversationNotification, sendNewUserNotification } = require('../libs/Notifications');
 const Conversation = require('../models/schemas/conversation');
+const Message = require('../models/schemas/message');
 
 module.exports.configureIo = (io) => {
     io.on('connection', socket => {
         socket.on('message', async (data) => {
-            const message = await MessageFactory.create(data);
+            const message = await MessageFactory.create(await saveMessage(data));
             io.emit(`message_${data.conversationId}`, message);
 
             const conversation = await Conversation.findById(data.conversationId);
@@ -34,3 +35,13 @@ module.exports.configureIo = (io) => {
         });
     });
 };
+
+async function saveMessage(data) {
+    let message = await MessageFactory.create(data);
+
+    Conversation.findByIdAndUpdate(message.conversationId, { updatedAt: new Date() }).exec();
+
+    message = await Message.create(message);
+
+    return message;
+}

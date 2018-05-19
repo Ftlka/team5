@@ -46,6 +46,12 @@
     border-radius: 10%;
     overflow: hidden;
     text-overflow: ellipsis;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .meatadata__text
