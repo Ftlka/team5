@@ -11,7 +11,6 @@ import io from 'socket.io-client';
 
 import { getRecentEmoji } from '../../lib/apiRequests/emoji';
 import './styles.css';
-import { saveMessage } from '../../lib/apiRequests/messages';
 import { uploadImage as requestUploadImage } from '../../lib/apiRequests/images';
 
 export default class Chat extends React.Component {
@@ -151,7 +150,6 @@ export default class Chat extends React.Component {
                         author: this.state.currentUser
                     };
                     this.socket.emit('message', message);
-                    saveMessage(message, message.conversationId);
                 }
             });
     }

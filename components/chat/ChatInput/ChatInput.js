@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 import React from 'react';
 import { updateRecentEmoji } from '../../../lib/apiRequests/emoji';
-import { saveMessage } from '../../../lib/apiRequests/messages';
 import EmojiPicker from './EmojiPicker/EmojiPicker';
 import { uploadImage as requestUploadImage } from '../../../lib/apiRequests/images';
 import ErrorModal from '../../errorModal';
@@ -150,9 +149,7 @@ export default class ChatInput extends React.Component {
             shownRecentEmoji: this.state.recentEmoji
         });
 
-        const savedMessage = await saveMessage(message, this.props.conversationId);
-
-        this.props.socket.emit('message', savedMessage.data);
+        this.props.socket.emit('message', message);
 
         updateRecentEmoji(this.state.recentEmoji);
     }
@@ -203,7 +200,6 @@ export default class ChatInput extends React.Component {
                         author: this.props.currentUser
                     };
                     this.props.socket.emit('message', message);
-                    saveMessage(message, message.conversationId);
                 }
             });
     }
