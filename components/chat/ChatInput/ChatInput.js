@@ -139,17 +139,16 @@ export default class ChatInput extends React.Component {
             author: this.props.currentUser
         };
 
-        const savedMessage = await saveMessage(message, this.props.conversationId);
-
-        this.props.socket.emit('message', savedMessage.data);
-
-
-        updateRecentEmoji(this.state.recentEmoji);
-
         this.setState({
             messageText: '',
             shownRecentEmoji: this.state.recentEmoji
         });
+
+        const savedMessage = await saveMessage(message, this.props.conversationId);
+
+        this.props.socket.emit('message', savedMessage.data);
+
+        updateRecentEmoji(this.state.recentEmoji);
     }
 
     onFileInputChange(event, file = event.target.files[0]) {
