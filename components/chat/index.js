@@ -16,7 +16,6 @@ import { saveMessage } from '../../lib/apiRequests/messages';
 import { uploadImage as requestUploadImage } from '../../lib/apiRequests/images';
 
 export default class Chat extends React.Component {
-// eslint-disable-next-line max-statements
     constructor(props) {
         super(props);
 
@@ -176,7 +175,14 @@ export default class Chat extends React.Component {
         };
 
         return (
-            <section className='chat-container'>
+            <Dropzone
+                disableClick
+                onDrop={this.onDrop}
+                onDragEnter={this.onDragEnter}
+                onDragLeave={this.onDragLeave}
+                className='chat-container'
+            >
+                {dropzoneActive && <div style={overlayStyle}>Drop images...</div>}
                 <ErrorModal
                     showModal={this.state.showErrorModal}
                     error={this.state.error}
@@ -208,27 +214,18 @@ export default class Chat extends React.Component {
                     handleCloseModal={this.closeParticipantsModal}
                     conversationId={this.props.messagesInfo.conversationId}
                 />
-                <Dropzone
-                    disableClick
-                    onDrop={this.onDrop}
-                    onDragEnter={this.onDragEnter}
-                    onDragLeave={this.onDragLeave}
-                    style={{ position: 'relative', display: 'contents' }}
-                >
-                    {dropzoneActive && <div style={overlayStyle}>Drop images...</div>}
-                    <Messages
-                        messages={this.state.messages}
-                        currentUser={this.state.currentUser}
-                        onMessageTitleClick={this.openProfileModal}
-                    />
+                <Messages
+                    messages={this.state.messages}
+                    currentUser={this.state.currentUser}
+                    onMessageTitleClick={this.openProfileModal}
+                />
 
-                    <ChatInput
-                        conversationId={this.props.messagesInfo.conversationId}
-                        socket={this.socket} currentUser={this.state.currentUser}
-                        recentEmoji={this.state.recentEmoji}
-                    />
-                </Dropzone>
-            </section>
+                <ChatInput
+                    conversationId={this.props.messagesInfo.conversationId}
+                    socket={this.socket} currentUser={this.state.currentUser}
+                    recentEmoji={this.state.recentEmoji}
+                />
+            </Dropzone>
         );
     }
 }
