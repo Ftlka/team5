@@ -43,7 +43,6 @@ export default class Message extends React.Component {
     }
 
     componentDidMount() {
-        console.info('MessageBox componentDidMount');
         setInterval(() => {
             this.setState({
                 curTime: this.state.date && !isNaN(this.state.date) && (
@@ -58,7 +57,6 @@ export default class Message extends React.Component {
     }
 
     componentWillUnmount() {
-        console.info('MessageBox componentWillUnmount');
         document.removeEventListener('keydown', this.handleEscape, false); // eslint-disable-line
         document.removeEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
         this.socket.removeListener(`updateMessage_${this.state._id}`);
