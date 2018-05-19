@@ -177,13 +177,6 @@ export default class Message extends React.Component {
                     <a
                         className='message__user-link'
                         onClick={this.props.onTitleClick}>{this.state.author}</a>
-                    {this.state.type === 'image'
-                        ? (<ImageMessage
-                            image={this.state.image}
-                            author={this.state.author}
-                        />)
-                        : null
-                    }
                     {this.state.showPickerButton
                         ? <div className={`show-picker-button ${this.state.position}-picker`}
                             onClick={this.onShowPickerButtonClick}
@@ -192,6 +185,13 @@ export default class Message extends React.Component {
                             }}
                         >&#9786; </div>
                         : <div className={`empty-div ${this.state.position}-picker`}></div>}
+                    {this.state.type === 'image'
+                        ? (<ImageMessage
+                            image={this.state.image}
+                            author={this.state.author}
+                        />)
+                        : null
+                    }
                     <ReactMarkdown renderers={{
                         linkReference: (reference) => {
                             if (!reference.href) {
