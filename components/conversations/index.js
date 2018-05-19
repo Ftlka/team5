@@ -20,7 +20,6 @@ export default class Conversations extends React.Component {
             shownConversations: sortedConversations,
             isModalOpen: false
         };
-        this.lastClickedChat = null;
 
         this.setShowedConversations = this.setShowedConversations.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -151,21 +150,6 @@ export default class Conversations extends React.Component {
         return conversation;
     }
 
-    resetStyles() {
-        if (this.lastClickedChat) {
-            this.lastClickedChat.style.backgroundColor = '#fff';
-        }
-    }
-
-    selectDialog(target) {
-        let currentNode = target;
-        while (currentNode.className !== 'rce-citem') {
-            currentNode = currentNode.parentNode;
-        }
-        this.lastClickedChat = currentNode;
-        currentNode.style.backgroundColor = '#f9f9f9';
-    }
-
     render() {
         return (
             <section className='conversations'>
@@ -187,7 +171,6 @@ export default class Conversations extends React.Component {
                 </div>
 
                 <div className='conversations__list' onClick={e => {
-                    this.resetStyles();
                     this.selectDialog(e.target);
                 }}>
                     <ChatList

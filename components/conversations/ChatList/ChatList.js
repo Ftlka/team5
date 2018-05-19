@@ -28,7 +28,7 @@ export default class ChatList extends Component {
                 {
                     this.props.dataSource.map((elem, idx) => (
                         <ChatItem
-                            id={elem.id}
+                            id={elem._id}
                             key={idx}
                             avatar={elem.avatar}
                             title={elem.title}

@@ -3,12 +3,13 @@
     display: block;
     overflow: hidden;
     min-width: 240px;
+    background-color: #fff;
 }
 
 .rce-citem
 {
     position: relative;
-    background: #fff;
+    background-color: inherit;
     height: 72px;
     cursor: pointer;
     user-select: none;

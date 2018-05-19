@@ -35,6 +35,8 @@ export default class Chat extends React.Component {
             title: ''
         };
 
+        this.lastOpenedChat = null;
+
         getRecentEmoji()
             .then(res => res.data)
             .then(recentEmoji => this.setState({ recentEmoji }));
@@ -80,13 +82,26 @@ export default class Chat extends React.Component {
         this.setState({ showParticipantsModal: false });
     }
 
+    resetStyles() {
+        if (this.lastOpenedChat) {
+            this.lastOpenedChat.style.backgroundColor = '#fff';
+        }
+    }
+
+    selectDialog() {
+        this.lastOpenedChat.style.backgroundColor = '#f9f9f9';
+    }
 
     componentDidMount() {
+        const id = this.props.messagesInfo.conversationId;
+        this.lastOpenedChat = document.querySelector(`.conversation-${id}`); // eslint-disable-line
+        this.selectDialog();
         this.socket.on(`message_${this.props.messagesInfo.conversationId}`,
             this.handleMessage);
     }
 
     componentWillUnmount() {
+        this.resetStyles();
         this.socket.removeListener(`message_${this.props.messagesInfo.conversationId}`);
     }
 

@@ -6,7 +6,6 @@ import Metadata from './Metadata/Metadata.js';
 export default class Message extends React.Component {
     constructor(props) {
         super(props);
-        console.info('message props:', props);
         this.state = {
             currentUser: props.currentUser,
             text: props.text,
