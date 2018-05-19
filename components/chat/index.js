@@ -9,7 +9,6 @@ import LoadingSpinner from '../LoadingSpinner';
 import ErrorModal from '../errorModal';
 import Dropzone from 'react-dropzone';
 import io from 'socket.io-client';
-import Notification from 'react-web-notification';
 
 import { getRecentEmoji } from '../../lib/apiRequests/emoji';
 import './styles.css';
@@ -202,15 +201,6 @@ export default class Chat extends React.Component {
 
         return (
             <section className='chat-container'>
-                <Notification
-                    ignore={this.state.ignore && this.state.title !== ''}
-                    notSupported={this.handleNotSupported}
-                    disableActiveWindow={this.state.disableActiveWindow}
-                    onPermissionGranted={this.handlePermissionGranted}
-                    onPermissionDenied={this.handlePermissionDenied}
-                    title={this.state.title}
-                    options={this.state.options}
-                />
                 <ErrorModal
                     showModal={this.state.showErrorModal}
                     error={this.state.error}

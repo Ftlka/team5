@@ -28,7 +28,7 @@ export default class EmojiPicker extends React.Component {
                 color='lightsalmon'
                 native={true}
                 style={{
-                    width: '19vw',
+                    width: '15em',
                     minWidth: '180px',
                     position: 'absolute',
                     bottom: '70px',
