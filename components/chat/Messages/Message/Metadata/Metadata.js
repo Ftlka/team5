@@ -15,7 +15,7 @@ export default class Metadata extends React.Component {
 
         return (
             <a href={this.props.metadata.url}>
-                <div className='metadata'>
+                <div className={`metadata metadata-${this.props.side}`}>
                     <a className='metadata__link' href={this.props.metadata.url}>
                         {this.props.metadata.title}
                     </a>

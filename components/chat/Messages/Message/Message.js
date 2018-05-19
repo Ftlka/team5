@@ -6,6 +6,7 @@ import Metadata from './Metadata/Metadata.js';
 export default class Message extends React.Component {
     constructor(props) {
         super(props);
+        console.info('message props:', props);
         this.state = {
             currentUser: props.currentUser,
             text: props.text,
@@ -34,7 +35,8 @@ export default class Message extends React.Component {
                 date={new Date(this.state.date)}
                 renderAddCmp={() => {
                     return this.state.metadata
-                        ? <Metadata metadata={this.state.metadata}/>
+                        ? <Metadata metadata={this.state.metadata}
+                            side={this.state.currentUser === this.state.author ? 'self' : 'other'}/>
                         : undefined;
                 }}
             />
