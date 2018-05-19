@@ -34,7 +34,8 @@ export default class Message extends React.Component {
                 date={new Date(this.state.date)}
                 renderAddCmp={() => {
                     return this.state.metadata
-                        ? <Metadata metadata={this.state.metadata}/>
+                        ? <Metadata metadata={this.state.metadata}
+                            side={this.state.currentUser === this.state.author ? 'self' : 'other'}/>
                         : undefined;
                 }}
             />

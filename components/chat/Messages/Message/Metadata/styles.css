@@ -9,13 +9,25 @@
     font-family: 'Lato', sans-serif;
     margin: 10px 10px 10px 0;
     padding: 10px;
-    border-right: 2px #ff817c double;
     background: rgba(255, 229, 204, .15);
+}
+
+.metadata-self
+{
+   margin-left: 69%;
+   border-left: 2px solid #4b0082;
+}
+
+.metadata-other
+{
+    margin-left: 1%;
+    border-right: 2px solid #4b0082;
 }
 
 .metadata:hover
 {
-    background: #ffe5cc;
+    background: linear-gradient(to left top, rgb(176, 224, 230), rgb(255, 192, 203));
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .3);    
 }
 
 .metadata__link

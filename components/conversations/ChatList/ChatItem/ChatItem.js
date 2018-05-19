@@ -10,7 +10,7 @@ export default class ChatItem extends Component {
     render() {
         return (
             <div
-                className={`rce-container-citem ${this.props.className}`}
+                className={`rce-container-citem conversation-${this.props.id}`}
                 onClick={this.props.onClick}
                 onContextMenu={this.props.onContextMenu}>
                 <div className='rce-citem'>
