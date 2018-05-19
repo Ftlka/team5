@@ -52,7 +52,6 @@ export default class Message extends React.Component {
         }, 60000);
         document.addEventListener('keydown', this.handleEscape, false); // eslint-disable-line
         document.addEventListener('click', this.handleOutsideEmojiClick); // eslint-disable-line
-        console.info(`updateMessage_${this.state.id}`);
         this.socket.on(`updateMessage_${this.state.id}`, this.updateMessage.bind(this));
     }
 
