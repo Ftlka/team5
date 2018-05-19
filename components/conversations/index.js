@@ -170,9 +170,7 @@ export default class Conversations extends React.Component {
                     </div>
                 </div>
 
-                <div className='conversations__list' onClick={e => {
-                    this.selectDialog(e.target);
-                }}>
+                <div className='conversations__list'>
                     <ChatList
                         dataSource={this.state.shownConversations.map(conversation => {
                             conversation.date = new Date(conversation.updatedAt);

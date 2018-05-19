@@ -11,6 +11,12 @@
     border-radius: 42px;
 }
 
+.participants-container:first-child > li
+{
+    position: inherit;
+    padding-top: 9px;
+}
+
 .participants-container::-webkit-scrollbar
 {
     display: none;

@@ -38,9 +38,12 @@
 {
     font-size: 25px;
     font-weight: 300;
-    color: #fff;
+    color: #272727;
     cursor: default;
     margin-left: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 133px;
 }
 
 .menu__alarm-clock-button

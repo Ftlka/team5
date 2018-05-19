@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ChatInput from './ChatInput/ChatInput.js';
-import AddPersonForm from './AddPersonForm/AddPersonForm.js';
 import ParticipantsModal from './ParticipantsModal/ParticipantsModal.js';
 import ProfileModal from '../ProfileModal/ProfileModal.js';
 import Messages from './Messages/Messages.js';
@@ -211,9 +210,9 @@ export default class Chat extends React.Component {
 
                 <div className='chat-container__controls'>
                     {!this.state.currentConversation.isPrivate &&
-                        <AddPersonForm
-                            conversationId={this.props.messagesInfo.conversationId}
-                        />}
+                    <img
+                        src='../../../.././static/images/group.png' alt='group'/>}
+                    <h2>{this.state.currentConversation.title}</h2>
                     <button
                         className='chat-container__show-participants-button'
                         onClick={this.openParticipantsModal}>
@@ -225,6 +224,7 @@ export default class Chat extends React.Component {
                     showModal={this.state.showParticipantsModal}
                     handleCloseModal={this.closeParticipantsModal}
                     conversationId={this.props.messagesInfo.conversationId}
+                    currentConversation={this.state.currentConversation}
                 />
                 <Messages
                     messages={this.state.messages}

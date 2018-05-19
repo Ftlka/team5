@@ -13,7 +13,8 @@ export default class ParticipantsModal extends React.Component {
         return {
             showModal: nextProps.showModal,
             handleCloseModal: nextProps.handleCloseModal,
-            conversationId: nextProps.conversationId
+            conversationId: nextProps.conversationId,
+            currentConversation: nextProps.currentConversation
         };
     }
 
@@ -34,13 +35,16 @@ export default class ParticipantsModal extends React.Component {
                         display: 'flex',
                         justifyContent: 'center',
                         margin: 'auto',
+                        marginBottom: '28%',
                         border: null,
-                        height: '40%',
-                        width: '43%'
+                        width: '43%',
+                        padding: 0,
+                        top: '90px'
                     }
                 }}
             >
                 <Participants
+                    currentConversation={this.state.currentConversation}
                     conversationId={this.state.conversationId}
                 />
             </ReactModal>);

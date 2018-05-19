@@ -16,11 +16,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-top: solid #f3f3f3;
 }
 
 .chat-input__input-elements > :first-child
 {
     width: 100% !important;
+    margin-left: 17px;
 }
 
 .chat-input__red-dot

@@ -3,6 +3,7 @@
     grid-area: conversations;
 
     padding-top: 13px;
+    border-right: solid #f3f3f3;
 }
 
 .conversations__controls
@@ -13,6 +14,7 @@
     align-items: center;
     height: 50px;
     margin-bottom: 10px;
+    padding-right: 21px;
 }
 
 .conversations__add-button

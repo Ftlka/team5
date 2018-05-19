@@ -9,7 +9,7 @@
 
 .messages li
 {
-    padding: 0 5px 10px 0;
+    padding: 0 5px 10px 10px;
     overflow: hidden;
     display: flex;
 }
