@@ -1,4 +1,5 @@
 # Kill0gr@m
+* [Ccылка на наш мессенджер](http://the-best-messenger.now.sh/) 
 ## Мы используем
 * [Nextjs](https://github.com/zeit/next.js)
 * [ESLint](http://eslint.org/): для анализа кода
@@ -7,7 +8,48 @@
 
 ### Структура проекта 
 ```
-потом
+.
+├── README.md
+├── components
+│   ├── LoadingSpinner
+│   ├── ProfileModal
+│   ├── chat
+│   ├── conversations
+│   ├── errorModal
+│   ├── menu
+│   └── welcomeMessage
+├── config
+│   ├── default.js
+│   └── production.js
+├── deploy.sh
+├── lib
+│   ├── Recognizer
+│   ├── ServiceWorker
+│   ├── Vibrator
+│   ├── apiRequests
+│   └── sounds
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── pages
+│   ├── _document.js
+│   ├── main
+│   └── signIn
+├── server
+│   ├── controllers
+│   ├── index.js
+│   ├── libs
+│   ├── middlewares
+│   ├── models
+│   ├── routers
+│   ├── sockets
+│   └── tests
+├── static
+│   ├── images
+│   └── sounds
+└── worker.js
+
+29 directories, 10 files
 ```
 ### Запуск проекта
 ```
