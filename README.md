@@ -2,16 +2,16 @@
 ## Мы используем
 * [Nextjs](https://github.com/zeit/next.js)
 * [ESLint](http://eslint.org/): для анализа кода
-* [Gulp](https://gulpjs.com/) : для сборки проекта, [Пример](https://webdesign-master.ru/blog/tools/2016-03-09-gulp-beginners.html)
 * [Now](https://zeit.co/now) : для хранения приложения 
 * Наше Api для БД 
+
 ### Структура проекта 
 ```
 потом
 ```
 ### Запуск проекта
 ```
-потом
+npm start
 ```
 ### Работа с GitHub (console вариант)
 1. Делаем fork главного репозитория через сайтик. <br />
@@ -50,6 +50,6 @@
 8.  Идём на сайт и создаём pull-request, указывая нашу ветку.
 
 ### Presentation
-1. https://docs.google.com/presentation/d/1oHaFruf9TpOrwro5CyCCjyLk92yPLppuKXGgBQDVtSM/edit?usp=sharing
-2. https://docs.google.com/presentation/d/1qEp7_4u2XcKBb5s2xuSfoLADI7A8OW62uhL5u_K-9TI/edit?usp=sharing
-3. https://docs.google.com/presentation/d/1MISN6BEvGxU9GP6szRIMA7jDj6y86B3aFSds8oB3-k4/edit?usp=sharing
+1. [Презентация 1](https://docs.google.com/presentation/d/1oHaFruf9TpOrwro5CyCCjyLk92yPLppuKXGgBQDVtSM/edit?usp=sharing)
+2. [Презентация 2](https://docs.google.com/presentation/d/1qEp7_4u2XcKBb5s2xuSfoLADI7A8OW62uhL5u_K-9TI/edit?usp=sharing)
+3. [Презентация 3](https://docs.google.com/presentation/d/1MISN6BEvGxU9GP6szRIMA7jDj6y86B3aFSds8oB3-k4/edit?usp=sharing)
