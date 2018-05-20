@@ -50,4 +50,6 @@
 8.  Идём на сайт и создаём pull-request, указывая нашу ветку.
 
 ### Presentation
-ко 2ому хакатону
+1. https://docs.google.com/presentation/d/1oHaFruf9TpOrwro5CyCCjyLk92yPLppuKXGgBQDVtSM/edit?usp=sharing
+2. https://docs.google.com/presentation/d/1qEp7_4u2XcKBb5s2xuSfoLADI7A8OW62uhL5u_K-9TI/edit?usp=sharing
+3. https://docs.google.com/presentation/d/1MISN6BEvGxU9GP6szRIMA7jDj6y86B3aFSds8oB3-k4/edit?usp=sharing
